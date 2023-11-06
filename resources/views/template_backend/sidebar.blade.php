@@ -1,7 +1,7 @@
 @php
     use App\Role;
     use App\UserMenu;
-
+    
     $user_menu = UserMenu::with('role')
         ->whereHas('role', function ($query) {
             return $query->where('role', auth()->user()->role);
@@ -67,6 +67,15 @@
                             </li>
                         @endif
                     @endforeach
+                    <li class="nav-item has-treeview"
+                        id="Absensi Kehadiran Siswa">
+                        <a href="{{ route('absensi-kehadiran.index') }}" class="nav-link">
+                            <i class="nav-icon fas fa-user"></i>
+                            <p>
+                                Absensi Kehadiran Siswa
+                            </p>
+                        </a>
+                    </li>
             </ul>
         </nav>
         <!-- /.sidebar-menu -->

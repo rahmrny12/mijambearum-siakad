@@ -22,9 +22,11 @@ class AbsensiKehadiranController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($type)
     {
-        //
+        if ($type == 'siswa') {
+            return view('absensi_kehadiran.absen_siswa');
+        }
     }
 
     /**

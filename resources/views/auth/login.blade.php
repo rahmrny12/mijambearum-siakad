@@ -54,7 +54,7 @@
                     </span>
                 @enderror
             </div>
-            <div class="row mb-1">
+            <div class="row mb-3">
                 <div class="col-7">
                     <div class="icheck-primary">
                         <input type="checkbox" id="remember" class="form-check-input" type="checkbox" name="remember"
@@ -69,7 +69,11 @@
                     <button type="submit" id="btn-login" class="btn btn-primary btn-block">{{ __('Login') }}
                         &nbsp; <i class="nav-icon fas fa-sign-in-alt"></i></button>
                 </div>
-                <!-- /.col -->
+            </div>
+            <div class="row mb-1">
+                <a href="{{ route('absensi-kehadiran.landing-absen', 'siswa') }}" class="btn btn-outline-primary" style="width: 100%">Absensi
+                    <i class="fas fa-arrow-alt-circle-right"></i>
+                </a>
             </div>
         </form>
 
