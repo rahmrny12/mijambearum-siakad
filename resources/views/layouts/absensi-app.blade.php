@@ -47,11 +47,51 @@
             </marquee>
         </footer>
     </div>
+    <div class="position-absolute top-0 bottom-0 left-0 right-0 card my-4 d-none" id="siswa-card">
+        <div class="card-body">
+            <div class="d-flex justify-content-between align-items-center">
+                <span>Tanggal : 00 - 00</span>
+                <span class="badge badge-success badge-pill p-3">00:00:00</span>
+            </div>
+            <hr>
+            <div class="d-flex justify-content-between">
+                <div class="col-md-6">
+                    <div class="my-4">
+                        <span class="d-block">Nama Siswa :</span>
+                        <span id="nama_siswa">-</span>
+                    </div>
+                    <div class="my-4">
+                        <span class="d-block">Kelas :</span>
+                        <span id="kelas">-</span>
+                    </div>
+                    <div class="my-4">
+                        <span class="d-block">Jenis Kelamin :</span>
+                        <span id="jenis_kelamin">-</span>
+                    </div>
+                    <div class="my-4">
+                        <span class="d-block">NISN :</span>
+                        <span id="nisn">-</span>
+                    </div>
+                </div>
+                <img src="" id="foto" alt="Foto Siswa">
+            </div>
+        </div>
+    </div>
 
     <!-- jQuery -->
     <script src="{{ asset('plugins/jquery/jquery.min.js') }}"></script>
     <script src="{{ asset('plugins/toastr/toastr.min.js') }}"></script>
     @yield('script')
+    @if (session('status'))
+        <script>
+            toastr.success("{{ Session('success') }}");
+        </script>
+    @endif
+    @if (Session::has('error'))
+        <script>
+            toastr.error("{{ Session('error') }}");
+        </script>
+    @endif
 </body>
 
 </html>

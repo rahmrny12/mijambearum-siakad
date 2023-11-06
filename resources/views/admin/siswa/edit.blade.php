@@ -70,6 +70,10 @@
                     <label for="tgl_lahir">Tanggal Lahir</label>
                     <input type="date" id="tgl_lahir" name="tgl_lahir" value="{{ $siswa->tgl_lahir }}" class="form-control @error('tgl_lahir') is-invalid @enderror">
                 </div>
+                <div class="form-group">
+                    <label for="rfid">RFID</label>
+                    <input type="text" id="rfid" name="rfid" onkeypress="return inputAngka(event)" value="{{ $siswa->rfid }}" class="form-control @error('rfid') is-invalid @enderror">
+                </div>
             </div>
           </div>
         </div>
