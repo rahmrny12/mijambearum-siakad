@@ -108,7 +108,7 @@ Route::middleware(['auth'])->group(function () {
   Route::post('/bk/edit-kelas/{id}', 'BKController@edit_tingkatan_kelas');
   Route::get('/guru/absensi', 'GuruController@absensi')->name('guru.absensi');
 
-//   Route::middleware(['admin'])->group(function () {
+  // Route::middleware(['admin'])->group(function () {
     // Route::middleware(['trash'])->group(function () {
       Route::get('/jadwal/trash', 'JadwalController@trash')->name('jadwal.trash');
       Route::get('/jadwal/restore/{id}', 'JadwalController@restore')->name('jadwal.restore');
@@ -197,7 +197,22 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/nilai-siswa/get-nilai-siswa', 'NilaiController@get_nilai_siswa');
     Route::get('/modul-guru', 'ModulController@show')->name('modul.all');
     Route::get('/modul-guru/get-mapel-guru/{id}', 'ModulController@get_mapel_guru')->name('nilai.get_mapel_guru');
-//   });
+
+    // Tabungan
+    Route::get('/kelas/tabungan/siswa', 'TabunganController@kelas_siswa')->name('kelas.tabungan.index');
+    Route::get('/kelas/tabungan/siswa/{id}', 'TabunganController@kelas_siswa_show')->name('kelas.tabungan.show');
+    Route::resource('/tabungan', TabunganController::class);
+    
+    // Infaq
+    Route::get('/kelas/infaq/siswa', 'InfaqController@kelas_siswa')->name('kelas.infaq.index');
+    Route::get('/kelas/infaq/siswa/{id}', 'InfaqController@kelas_siswa_show')->name('kelas.infaq.show');
+    Route::resource('/infaq', InfaqController::class);
+
+    // Pembelian Lks
+    Route::get('/kelas/pembelian-lks/siswa', 'LksController@kelas_siswa')->name('kelas.lks.index');
+    Route::get('/kelas/pembelian-lks/siswa/{id}', 'LksController@kelas_siswa_show')->name('kelas.lks.show');
+    Route::resource('/pembelian-lks', LksController::class);
+    //   });
 
   Route::get('/modul/show-file/{id}', 'ModulController@show_file')->name('modul.show_file');
 });

@@ -13,15 +13,17 @@ class CreateUserMenusTable extends Migration
      */
     public function up()
     {
-        Schema::create('user_menus', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->string('title');
-            $table->string('icon');
-            $table->integer('menu_id')->nullable();
-            $table->string('route')->nullable();
-            $table->string('route_param')->nullable();
-            $table->timestamps();
-        });
+        if (!Schema::hasTable('user_menus')) {
+            Schema::create('user_menus', function (Blueprint $table) {
+                $table->bigIncrements('id');
+                $table->string('title');
+                $table->string('icon');
+                $table->integer('menu_id')->nullable();
+                $table->string('route')->nullable();
+                $table->string('route_param')->nullable();
+                $table->timestamps();
+            });
+        }
     }
 
     /**
@@ -31,6 +33,8 @@ class CreateUserMenusTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('user_menus');
+        if (!Schema::hasTable('user_menus')) {
+            Schema::dropIfExists('user_menus');
+        }
     }
 }

@@ -13,10 +13,12 @@ class CreateAbsensiKehadiransTable extends Migration
      */
     public function up()
     {
-        Schema::create('absensi_kehadirans', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->timestamps();
-        });
+        if (!Schema::hasTable('absensi_kehadirans')) {
+            Schema::create('absensi_kehadirans', function (Blueprint $table) {
+                $table->bigIncrements('id');
+                $table->timestamps();
+            });
+        }
     }
 
     /**
@@ -26,6 +28,8 @@ class CreateAbsensiKehadiransTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('absensi_kehadirans');
+        if (!Schema::hasTable('absensi_kehadirans')) {
+            Schema::dropIfExists('absensi_kehadirans');
+        }
     }
 }

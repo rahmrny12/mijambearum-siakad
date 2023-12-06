@@ -13,14 +13,16 @@ class CreateHistoryTukarJadwalsTable extends Migration
      */
     public function up()
     {
-        Schema::create('history_tukar_jadwals', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->integer('approval_user_id');
-            $table->integer('jadwal_id');
-            $table->integer('tukar_jadwal_id');
-            $table->tinyInteger('status_permintaan');
-            $table->timestamps();
-        });
+        if (!Schema::hasTable('history_tukar_jadwals')) {
+            Schema::create('history_tukar_jadwals', function (Blueprint $table) {
+                $table->bigIncrements('id');
+                $table->integer('approval_user_id');
+                $table->integer('jadwal_id');
+                $table->integer('tukar_jadwal_id');
+                $table->tinyInteger('status_permintaan');
+                $table->timestamps();
+            });
+        }
     }
 
     /**
@@ -30,6 +32,8 @@ class CreateHistoryTukarJadwalsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('history_tukar_jadwals');
+        if (Schema::hasTable('history_tukar_jadwals')) {
+            Schema::dropIfExists('history_tukar_jadwals');
+        }
     }
 }

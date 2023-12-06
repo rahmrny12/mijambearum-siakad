@@ -13,12 +13,14 @@ class CreateRoleMenuAccessTable extends Migration
      */
     public function up()
     {
-        Schema::create('role_menu_access', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->integer('role_id');
-            $table->integer('menu_id');
-            $table->timestamps();
-        });
+        if (!Schema::hasTable('role_menu_access')) {
+            Schema::create('role_menu_access', function (Blueprint $table) {
+                $table->bigIncrements('id');
+                $table->integer('role_id');
+                $table->integer('menu_id');
+                $table->timestamps();
+            });
+        }
     }
 
     /**
@@ -28,6 +30,8 @@ class CreateRoleMenuAccessTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('role_menu_access');
+        if (!Schema::hasTable('role_menu_access')) {
+            Schema::dropIfExists('role_menu_access');
+        }
     }
 }
