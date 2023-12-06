@@ -42,6 +42,11 @@ class Siswa extends Model
             ->withPivot('nilai');
     }
 
+    public function tabungan()
+    {
+        return $this->hasOne(Tabungan::class, 'siswa_id', 'id')->withDefault(['saldo' => 0]);
+    }
+
     // public function nilai($id)
     // {
     //     $guru = Guru::where('id_card', Auth::user()->id_card)->first();

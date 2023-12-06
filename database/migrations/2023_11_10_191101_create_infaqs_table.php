@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateRolesTable extends Migration
+class CreateInfaqsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,11 @@ class CreateRolesTable extends Migration
      */
     public function up()
     {
-        Schema::table('siswa', function (Blueprint $table) {
-            $table->string('rfid')->nullable();
+        Schema::create('infaqs', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->integer('siswa_id');
+            $table->double('nominal');
+            $table->timestamps();
         });
     }
 
@@ -25,8 +28,6 @@ class CreateRolesTable extends Migration
      */
     public function down()
     {
-        Schema::table('siswa', function (Blueprint $table) {
-            $table->dropColumn('rfid');
-        });
+        Schema::dropIfExists('infaqs');
     }
 }
