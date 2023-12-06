@@ -1,7 +1,7 @@
 @extends('template_backend.home')
-@section('heading', 'Absensi Kehadiran Siswa')
+@section('heading', 'Absensi Kehadiran Guru')
 @section('page')
-    <li class="breadcrumb-item active">Absensi Kehadiran Siswa</li>
+    <li class="breadcrumb-item active">Absensi Kehadiran Guru</li>
 @endsection
 @section('content')
     <div class="col-md-12">
@@ -27,8 +27,8 @@
                     <tr>
                         <th>No.</th>
                         <th>Tanggal</th>
-                        <th>Foto Siswa</th>
-                        <th>Nama Siswa</th>
+                        <th>Foto guru</th>
+                        <th>Nama guru</th>
                         <th>Jam Masuk</th>
                         <th>Jam Pulang</th>
                         <th>Status</th>
@@ -41,11 +41,11 @@
                             <td>{{ $loop->iteration }}</td>
                             <td>{{ $data->tanggal }}</td>
                             <td>
-                                <a href="{{ asset($data->siswa->foto) }}" data-toggle="lightbox" data-title="Foto {{ $data->siswa->nama_siswa }}" data-gallery="gallery">
-                                    <img src="{{ asset($data->siswa->foto) }}" width="130px" class="img-fluid mb-2">
+                                <a href="{{ asset($data->guru->foto) }}" data-toggle="lightbox" data-title="Foto {{ $data->guru->nama_guru }}" data-gallery="gallery">
+                                    <img src="{{ asset($data->guru->foto) }}" width="130px" class="img-fluid mb-2">
                                 </a>
                             </td>
-                            <td>{{ $data->siswa->nama_siswa }}</td>
+                            <td>{{ $data->guru->nama_guru }}</td>
                             <td>{{ $data->jam_masuk }}</td>
                             <td>{{ $data->jam_pulang ?? '-' }}</td>
                             <td>{{ $data->status_masuk }}</td>

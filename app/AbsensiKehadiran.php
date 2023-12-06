@@ -11,7 +11,7 @@ class AbsensiKehadiran extends Model
 
     public function siswa()
     {
-        return $this->belongsTo('App\Siswa', 'id_siswa', 'id')->withDefault();
+        return $this->belongsTo(Siswa::class, 'id_siswa', 'id')->withDefault();
     }
 
     protected $table = 'absen_kehadiran_siswa';

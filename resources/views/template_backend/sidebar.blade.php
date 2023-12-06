@@ -68,11 +68,29 @@
                         @endif
                     @endforeach
                     <li class="nav-item has-treeview"
+                        id="Aturan Jam Siswa">
+                        <a href="{{ route('aturan-jam-siswa.index') }}" class="nav-link">
+                            <i class="nav-icon fas fa-user"></i>
+                            <p>
+                                Aturan Jam Siswa
+                            </p>
+                        </a>
+                    </li>
+                    <li class="nav-item has-treeview"
                         id="Absensi Kehadiran Siswa">
                         <a href="{{ route('absensi-kehadiran.index') }}" class="nav-link">
                             <i class="nav-icon fas fa-user"></i>
                             <p>
                                 Absensi Kehadiran Siswa
+                            </p>
+                        </a>
+                    </li>
+                    <li class="nav-item has-treeview"
+                        id="Absensi Kehadiran Siswa">
+                        <a href="{{ route('absensi-kehadiran.guru') }}" class="nav-link">
+                            <i class="nav-icon fas fa-user"></i>
+                            <p>
+                                Absensi Kehadiran Guru
                             </p>
                         </a>
                     </li>

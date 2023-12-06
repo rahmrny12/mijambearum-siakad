@@ -38,6 +38,7 @@
                         <h5 class="card-title card-text mb-2">Tanggal Lahir :
                             {{ date('l, d F Y', strtotime($guru->tgl_lahir)) }}</h5>
                         <h5 class="card-title card-text mb-2">No. Telepon : {{ $guru->telp }}</h5>
+                        <h5 class="card-title card-text mb-2">RFID : {{ $guru->rfid }}</h5>
                     </div>
                 </div>
             </div>

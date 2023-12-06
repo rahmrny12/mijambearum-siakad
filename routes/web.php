@@ -200,8 +200,15 @@ Route::middleware(['auth'])->group(function () {
 //   });
 
   Route::get('/modul/show-file/{id}', 'ModulController@show_file')->name('modul.show_file');
+
+  // absensi kehadiran
+  Route::resource('/aturan-jam-siswa', 'AturanJamSiswaController');
+  Route::get('/aturan-jam-siswa/edit/json', 'AturanJamSiswaController@getEdit');
+
+  Route::get('/absensi-kehadiran', 'AbsensiKehadiranController@index')->name('absensi-kehadiran.index');
+  Route::get('/absensi-kehadiran/guru', 'AbsensiKehadiranController@guru')->name('absensi-kehadiran.guru');
 });
 
-Route::resource('/absensi-kehadiran', 'AbsensiKehadiranController');
+Route::post('/absensi-kehadiran', 'AbsensiKehadiranController@store')->name('absensi-kehadiran.store');
 Route::get('/absensi/{type}', 'AbsensiKehadiranController@create')->name('absensi-kehadiran.landing-absen');
 Route::post('/absensi/cari-siswa', 'AbsensiKehadiranController@cari_siswa');
