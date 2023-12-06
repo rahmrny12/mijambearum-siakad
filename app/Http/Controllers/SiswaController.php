@@ -48,7 +48,8 @@ class SiswaController extends Controller
             'no_induk' => 'required|string|unique:siswa',
             'nama_siswa' => 'required',
             'jk' => 'required',
-            'kelas_id' => 'required'
+            'kelas_id' => 'required',
+            'rfid' => 'required',
         ]);
 
         if ($request->foto) {
@@ -72,7 +73,8 @@ class SiswaController extends Controller
             'kelas_id' => $request->kelas_id,
             'tmp_lahir' => $request->tmp_lahir,
             'tgl_lahir' => $request->tgl_lahir,
-            'foto' => $nameFoto
+            'rfid' => $request->rfid,
+            'foto' => $nameFoto,
         ]);
 
         return redirect()->back()->with('success', 'Berhasil menambahkan data siswa baru!');
@@ -117,7 +119,8 @@ class SiswaController extends Controller
         $this->validate($request, [
             'nama_siswa' => 'required',
             'jk' => 'required',
-            'kelas_id' => 'required'
+            'kelas_id' => 'required',
+            'rfid' => 'required'
         ]);
 
         $siswa = Siswa::findorfail($id);
@@ -136,6 +139,7 @@ class SiswaController extends Controller
             'kelas_id' => $request->kelas_id,
             'tmp_lahir' => $request->tmp_lahir,
             'tgl_lahir' => $request->tgl_lahir,
+            'rfid' => $request->rfid,
         ];
         $siswa->update($siswa_data);
 

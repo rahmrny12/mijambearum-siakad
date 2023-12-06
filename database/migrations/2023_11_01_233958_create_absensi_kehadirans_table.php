@@ -13,23 +13,19 @@ class CreateAbsensiKehadiransTable extends Migration
      */
     public function up()
     {
-        if (!Schema::hasTable('absensi_kehadirans')) {
-            Schema::create('absensi_kehadirans', function (Blueprint $table) {
-                $table->bigIncrements('id');
-                $table->timestamps();
-            });
-        }
+        Schema::create('absen_kehadiran_siswa', function (Blueprint $table) {
+            $table->bigInteger('id');
+            $table->string('id_siswa');
+            $table->time('jam_masuk');
+            $table->time('jam_pulang');
+            $table->enum('status_masuk', ['Tepat Waktu', 'Terlambat'])->nullable();
+            $table->date('tanggal');
+            $table->timestamps();
+            $table->softDeletes();
+        });
     }
-
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
     public function down()
     {
-        if (!Schema::hasTable('absensi_kehadirans')) {
-            Schema::dropIfExists('absensi_kehadirans');
-        }
+        Schema::dropIfExists('absen_kehadiran_siswa');
     }
 }

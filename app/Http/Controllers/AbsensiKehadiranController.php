@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\AbsensiKehadiran;
+use App\Siswa;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 
 class AbsensiKehadiranController extends Controller
 {
@@ -14,7 +16,9 @@ class AbsensiKehadiranController extends Controller
      */
     public function index()
     {
-        return view('absensi_kehadiran.index');
+        $absensi_kehadiran = AbsensiKehadiran::get();
+        
+        return view('absensi_kehadiran.index', compact('absensi_kehadiran'));
     }
 
     /**
@@ -29,15 +33,27 @@ class AbsensiKehadiranController extends Controller
         }
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'keyword' => 'required',
+        ]);
+        
+        $siswa = Siswa::with('kelas')->where('rfid', $request->keyword)->first();
+
+        if ($siswa) {
+            AbsensiKehadiran::create([
+                'id_siswa' => $siswa->id,
+                'jam_masuk' => Carbon::now()->toTimeString(),
+                'jam_pulang' => null,
+                'status_masuk' => 'Tepat Waktu',
+                'tanggal' => Carbon::now()->format('Y-m-d'),
+            ]);
+
+            return redirect()->back()->with('success', 'Aktivitas berhasil ditambahkan');
+        } else {
+            return redirect()->back()->with('error', 'Siswa tidak ditemukan');
+        }
     }
 
     /**
@@ -48,7 +64,12 @@ class AbsensiKehadiranController extends Controller
      */
     public function show(AbsensiKehadiran $absensiKehadiran)
     {
-        //
+    }
+
+    public function cari_siswa(Request $request)
+    {
+        $siswa = Siswa::with('kelas')->where('rfid', $request->keyword)->first();
+        return response()->json($siswa);
     }
 
     /**

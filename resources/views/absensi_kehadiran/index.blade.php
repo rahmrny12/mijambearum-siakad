@@ -1,7 +1,7 @@
 @extends('template_backend.home')
-@section('heading', 'Modul')
+@section('heading', 'Absensi Kehadiran Siswa')
 @section('page')
-    <li class="breadcrumb-item active">Modul</li>
+    <li class="breadcrumb-item active">Absensi Kehadiran Siswa</li>
 @endsection
 @section('content')
     <div class="col-md-12">
@@ -12,7 +12,7 @@
                         <div class="mb-3 col-md-3 px-0">
                             <select id="guru" type="text" class="form-control select2bs4" name="guru"
                                 autocomplete="guru" onchange="getMapelGuru()">
-                                <option value="">Pilih Guru</option>
+                                <option value="">Pilih Kelas</option>
                                 {{-- @foreach ($guru as $item)
                                     <option @if (request('guru') == $item->id) selected @endif value="{{ $item->id }}">
                                         {{ $item->nama_guru }}
@@ -20,47 +20,33 @@
                                 @endforeach --}}
                             </select>
                         </div>
-                        <div class="d-flex justify-content-end">
-                            <div class="mb-3 col-md-4 ml-3 px-0">
-                                <select id="mapel" name="mapel" class="form-control">
-                                    <option value="">Pilih Mapel</option>
-                                </select>
-                            </div>
-                            <div class="mb-3 ml-3 px-0">
-                                <input type='date' value="{{ request('tanggal_awal') ?: now()->format('Y-m-d') }}"
-                                    id="tanggal_awal" name='tanggal_awal' class="form-control">
-                            </div>
-                            <div class="mb-3 ml-3 px-0">
-                                <input type='date' value="{{ request('tanggal_akhir') ?: now()->format('Y-m-d') }}"
-                                    id="tanggal_akhir" name='tanggal_akhir' class="form-control">
-                            </div>
-                            <div class="form-group">
-                                <button type="submit" class="btn btn-primary ml-3 px-3">Filter</button>
-                            </div>
-                        </div>
                 </form>
             </div>
             <table id="example1" class="table table-bordered table-striped table-hover">
                 <thead>
                     <tr>
                         <th>No.</th>
-                        <th>Tahun</th>
-                        <th>Nama Guru</th>
-                        <th>Mapel</th>
-                        <th>Semester</th>
-                        <th>File Name</th>
+                        <th>Foto Siswa</th>
+                        <th>Nama Siswa</th>
+                        <th>Jam Masuk</th>
+                        <th>Jam Pulang</th>
+                        <th>Status</th>
                         <th>Aksi</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {{-- @foreach ($modul as $data)
+                    @foreach ($absensi_kehadiran as $data)
                         <tr>
                             <td>{{ $loop->iteration }}</td>
-                            <td>{{ $data->tahun }}</td>
-                            <td>{{ $data->guru->nama_guru }}</td>
-                            <td>{{ $data->mapel->nama_mapel }}</td>
-                            <td>{{ $data->semester }}</td>
-                            <td>{{ $data->file_modul }}</td>
+                            <td>
+                                <a href="{{ asset($data->siswa->foto) }}" data-toggle="lightbox" data-title="Foto {{ $data->siswa->nama_siswa }}" data-gallery="gallery">
+                                    <img src="{{ asset($data->siswa->foto) }}" width="130px" class="img-fluid mb-2">
+                                </a>
+                            </td>
+                            <td>{{ $data->siswa->nama_siswa }}</td>
+                            <td>{{ $data->jam_masuk }}</td>
+                            <td>{{ $data->jam_pulang ?? '-' }}</td>
+                            <td>{{ $data->status_masuk }}</td>
                             <td class="d-flex">
                                 <a href="{{ route('modul.show_file', Crypt::encrypt($data->id)) }}" target="_blank"
                                     class="btn btn-info btn-sm mr-2"><i class="nav-icon fas fa-search-plus"></i>
@@ -74,7 +60,7 @@
                                 </form>
                             </td>
                         </tr>
-                    @endforeach --}}
+                    @endforeach
                 </tbody>
             </table>
         </div>

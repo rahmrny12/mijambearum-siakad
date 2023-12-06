@@ -13,13 +13,9 @@ class CreateRolesTable extends Migration
      */
     public function up()
     {
-        if (!Schema::hasTable('roles')) {
-            Schema::create('roles', function (Blueprint $table) {
-                $table->bigIncrements('id');
-                $table->string('role');
-                $table->timestamps();
-            });
-        }
+        Schema::table('siswa', function (Blueprint $table) {
+            $table->string('rfid')->nullable();
+        });
     }
 
     /**
@@ -29,8 +25,8 @@ class CreateRolesTable extends Migration
      */
     public function down()
     {
-        if (!Schema::hasTable('roles')) {
-            Schema::dropIfExists('roles');
-        }
+        Schema::table('siswa', function (Blueprint $table) {
+            $table->dropColumn('rfid');
+        });
     }
 }

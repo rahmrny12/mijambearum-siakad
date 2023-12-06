@@ -219,3 +219,4 @@ Route::middleware(['auth'])->group(function () {
 
 Route::resource('/absensi-kehadiran', 'AbsensiKehadiranController');
 Route::get('/absensi/{type}', 'AbsensiKehadiranController@create')->name('absensi-kehadiran.landing-absen');
+Route::post('/absensi/cari-siswa', 'AbsensiKehadiranController@cari_siswa');
