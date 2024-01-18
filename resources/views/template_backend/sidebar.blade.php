@@ -86,11 +86,38 @@
                         </a>
                     </li>
                     <li class="nav-item has-treeview"
-                        id="Absensi Kehadiran Siswa">
+                        id="Absensi Kehadiran Guru">
                         <a href="{{ route('absensi-kehadiran.guru') }}" class="nav-link">
                             <i class="nav-icon fas fa-user"></i>
                             <p>
                                 Absensi Kehadiran Guru
+                            </p>
+                        </a>
+                    </li>
+                    <li class="nav-item has-treeview"
+                        id="Tabungan Siswa">
+                        <a href="{{ route('kelas.tabungan.index') }}" class="nav-link">
+                            <i class="nav-icon fas fa-user"></i>
+                            <p>
+                                Tabungan Siswa
+                            </p>
+                        </a>
+                    </li>
+                    <li class="nav-item has-treeview"
+                        id="Infaq">
+                        <a href="{{ route('kelas.infaq.index') }}" class="nav-link">
+                            <i class="nav-icon fas fa-user"></i>
+                            <p>
+                                Infaq
+                            </p>
+                        </a>
+                    </li>
+                    <li class="nav-item has-treeview"
+                        id="Pembelian LKS">
+                        <a href="{{ route('kelas.lks.index') }}" class="nav-link">
+                            <i class="nav-icon fas fa-user"></i>
+                            <p>
+                                Pembelian LKS
                             </p>
                         </a>
                     </li>

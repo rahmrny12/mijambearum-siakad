@@ -3,16 +3,18 @@
 @section('content')
     <div class="d-flex flex-column align-items-center justify-content-center">
         <div class="col-md-4">
-            <input type="text" class="form-control" id="id_card" placeholder="Masukkan ID Card" id="input-search-siswa" name="keyword" onkeyup="submitAbsen(event, this)">
+            <input type="text" class="form-control" placeholder="Masukkan ID Card" id="input-search-siswa" name="keyword" onkeyup="submitAbsen(event, this)" autofocus>
         </div>
     </div>
 
     @section('script')
         <script>
             function submitAbsen(e, keyword) {
-                if (e.key === 'Enter') {
-                    getSiswa(keyword.value)
-                        .then(result => {
+                const isSiswaCardShowing = !$("#siswa_card").hasClass('d-none');
+                const isGuruCardShowing = !$("#guru_card").hasClass('d-none');
+                if (e.key === 'Enter' && !isSiswaCardShowing && !isGuruCardShowing) {
+                    searchByRFID(keyword.value)
+                        .then(async (result) => {
                             const type = result.hasOwnProperty('nama_guru') ? 'guru' : 'siswa';
                             if (type == 'siswa') {
                                 $('#nama_siswa').html(result.nama_siswa);
@@ -29,10 +31,11 @@
                                 $('#foto').attr('src', `{{ asset('') }}` + result.foto);
                             }
                             
-                            sendAbsensi(keyword)
+                            await sendAbsensi(keyword)
                                 .then(response => {
                                     const type = Object.keys(response)[0];
                                     const message = response[type];
+                                    console.log(response)
 
                                     toastr.options.positionClass = "toast-top-center";
                                     if (type == 'success') {
@@ -44,30 +47,34 @@
                                     }
                                     toastr.options.positionClass = "toast-top-right";
                                     
-                                    setInterval(() => {
-                                        if (type == 'siswa') {
-                                            $("#siswa_card").addClass('d-none');
-                                        } else {
-                                            $("#guru_card").addClass('d-none');
-                                        }
+                                    const removeCard = setTimeout(() => {
+                                        console.log('tes')
+                                        $("#siswa_card").addClass('d-none');
+                                        $("#guru_card").addClass('d-none');
                                     }, 5000);
                                 })
                                 .catch(error => {
                                     console.log(error)
-                                    toastr.error("Terjadi kesalahan saat mengirim absensi. " + error.status ?? '' + " " + error.statusText ?? '')
+                                    toastr.error("Terjadi kesalahan saat mengirim absensi. " + error.status == undefined ? '' : error.status + " " + error.statusText == undefined ? '' : error.statusText)
                                 })
                         })
                         .catch(error => {
-                            console.log(error)
-                            toastr.error("Terjadi kesalahan saat mengambil data. " + error.status + " " + error.statusText)
+                            if (error.status == 404) {
+                                toastr.error("Data tidak ditemukan.")
+                            } else {
+                                console.log(error)
+                                toastr.error("Terjadi kesalahan saat mengambil data. " + error.status + " " + error.statusText)
+                            }
                         })
-                    // setTimeout(function() {
-                    //     $('#siswa-card');
-                    // }, 2000); // 2000 milliseconds = 2 seconds
+                        .finally(() => {
+                            $('#input-search-siswa').val('')
+                        })
+                } else {
+                    $('#input-search-siswa').val('')
                 }
             }
             
-            function getSiswa(keyword) {
+            function searchByRFID(keyword) {
                 return new Promise((resolve, reject) => {
                     $.ajax({
                         type: "POST",
@@ -75,9 +82,9 @@
                             "_token": "{{ csrf_token() }}",
                             "keyword": keyword,
                         },
-                        url: "{{ url('/absensi/cari-siswa') }}",
+                        url: "{{ url('/absensi/search') }}",
                         success: function(result){
-                            if(result){
+                            if(Object.keys(result).length != 0){
                                 const type = result.hasOwnProperty('nama_guru') ? 'guru' : 'siswa';
                                 
                                 if (type == 'siswa') {
@@ -97,11 +104,8 @@
                             }
                         },
                         error: function(error){
-                            $("#siswa-card").addClass('d-none');
                             reject(error);
                         },
-                        complete: function(){
-                        }
                     });
                 });
             }
@@ -125,17 +129,6 @@
                         }
                     });
                 });
-            }
-            
-            function delay(callback, ms) {
-                var timer = 0;
-                return function() {
-                    var context = this, args = arguments;
-                    clearTimeout(timer);
-                    timer = setTimeout(function () {
-                    callback.apply(context, args);
-                    }, ms || 0);
-                };
             }
         </script>
     @endsection

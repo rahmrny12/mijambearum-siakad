@@ -38,10 +38,14 @@
                                     </div>
                                     <div class="card-body">
                                         <ul>
-                                            <li>rows 1 = nama siswa</li>
-                                            <li>rows 2 = no induk siswa</li>
-                                            <li>rows 3 = jenis kelamin (L/P)</li>
-                                            <li>rows 4 = nama kelas</li>
+                                            <li>rows 1 nama_siswa</li>
+                                            <li>rows 2 jk</li>
+                                            <li>rows 3 tmp_lahir</li>
+                                            <li>rows 4 tgl_lahir</li>
+                                            <li>rows 5 rfid</li>
+                                            <li>rows 6 no_induk</li>
+                                            <li>rows 7 no_induk_nasional</li>
+                                            <li>rows 8 alamat</li>
                                         </ul>
                                     </div>
                                 </div>

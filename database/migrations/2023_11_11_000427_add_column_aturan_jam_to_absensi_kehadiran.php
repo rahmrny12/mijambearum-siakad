@@ -13,7 +13,7 @@ class AddColumnAturanJamToAbsensiKehadiran extends Migration
      */
     public function up()
     {
-        Schema::table('absensi_kehadiran', function (Blueprint $table) {
+        Schema::table('absen_kehadiran_siswa', function (Blueprint $table) {
             $table->string('aturan_jam_siswa_id')->nullable();
         });
     }
@@ -25,7 +25,7 @@ class AddColumnAturanJamToAbsensiKehadiran extends Migration
      */
     public function down()
     {
-        Schema::table('absensi_kehadiran', function (Blueprint $table) {
+        Schema::table('absen_kehadiran_siswa', function (Blueprint $table) {
             $table->dropColumn('aturan_jam_siswa_id');
         });
     }

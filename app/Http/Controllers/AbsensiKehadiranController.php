@@ -19,7 +19,7 @@ class AbsensiKehadiranController extends Controller
      */
     public function index()
     {
-        $absensi_kehadiran = AbsensiKehadiran::get();
+        $absensi_kehadiran = AbsensiKehadiran::orderByDesc('id')->get();
         
         return view('absensi_kehadiran.index', compact('absensi_kehadiran'));
     }
@@ -39,9 +39,7 @@ class AbsensiKehadiranController extends Controller
      */
     public function create($type)
     {
-        if ($type == 'siswa') {
-            return view('absensi_kehadiran.absen', compact('type'));
-        }
+        return view('absensi_kehadiran.absen', compact('type'));
     }
 
     public function store(Request $request)
@@ -52,7 +50,6 @@ class AbsensiKehadiranController extends Controller
         
         $is_siswa = true;
         $user = Siswa::with('kelas')->where('rfid', $request->keyword)->first();
-        // return response()->json(['tes' => 'tes']);
         if (!$user) {
             $is_siswa = false;
             $user = Guru::where('rfid', $request->keyword)->first();
@@ -122,20 +119,18 @@ class AbsensiKehadiranController extends Controller
      * @param  \App\AbsensiKehadiran  $absensiKehadiran
      * @return \Illuminate\Http\Response
      */
-    public function show(AbsensiKehadiran $absensiKehadiran)
-    {
-    }
-
-    public function cari_siswa(Request $request)
+    public function search_by_rfid(Request $request)
     {
         $request->validate([
             'keyword' => 'required',
         ]);
         
         $user = Siswa::with('kelas')->where('rfid', $request->keyword)->first();
-        if (!$user) {
+        if (!$user)
             $user = Guru::where('rfid', $request->keyword)->first();
-        }
+
+        if (!$user)
+            return response()->json(['error' => 'Siswa tidak ditemukan'], 404);
         
         return response()->json($user);
     }

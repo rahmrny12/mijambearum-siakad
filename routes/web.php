@@ -226,4 +226,4 @@ Route::middleware(['auth'])->group(function () {
 
 Route::post('/absensi-kehadiran', 'AbsensiKehadiranController@store')->name('absensi-kehadiran.store');
 Route::get('/absensi/{type}', 'AbsensiKehadiranController@create')->name('absensi-kehadiran.landing-absen');
-Route::post('/absensi/cari-siswa', 'AbsensiKehadiranController@cari_siswa');
+Route::post('/absensi/search', 'AbsensiKehadiranController@search_by_rfid');
