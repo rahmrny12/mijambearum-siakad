@@ -7,8 +7,10 @@ use App\AbsensiKehadiran;
 use App\AturanJamSiswa;
 use App\Guru;
 use App\Siswa;
+use GuzzleHttp\Exception\RequestException;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
+use GuzzleHttp\Client;
 
 class AbsensiKehadiranController extends Controller
 {
@@ -54,7 +56,7 @@ class AbsensiKehadiranController extends Controller
             $is_siswa = false;
             $user = Guru::where('rfid', $request->keyword)->first();
         }
-
+        
         if ($user) {
             $aturan_jam_siswa = AturanJamSiswa::where('status', 1)->first();
 
@@ -90,7 +92,7 @@ class AbsensiKehadiranController extends Controller
             }
             
             if ($is_siswa) {
-                AbsensiKehadiran::create([
+                $inserted_absensi = AbsensiKehadiran::create([
                     'id_siswa' => $user->id,
                     'jam_masuk' => $jam_sekarang,
                     'jam_pulang' => null,
@@ -98,7 +100,7 @@ class AbsensiKehadiranController extends Controller
                     'tanggal' => Carbon::now()->format('Y-m-d'),
                 ]);
             } else {
-                AbsensiKehadiranGuru::create([
+                $inserted_absensi = AbsensiKehadiranGuru::create([
                     'id_guru' => $user->id,
                     'jam_masuk' => $jam_sekarang,
                     'jam_pulang' => null,
@@ -107,6 +109,16 @@ class AbsensiKehadiranController extends Controller
                 ]);
             }
 
+            if ($is_siswa && $user->no_telp != 0) {
+                $client = new Client;
+                $request = $client->post('http://128.199.217.52/send-message', [
+                    'form_params' => [
+                        'message' => "INFO ABSENSI MIS JAMBE ARUM\n\nNAMA : {$user->nama_siswa}\nKELAS : {$user->kelas->nama_kelas}\n\nTELAH MELAKUKAN ABSENSI PADA PUKUL {$inserted_absensi->jam_masuk} TANGGAL {$inserted_absensi->tanggal}\n\nSTATUS : {$inserted_absensi->status_masuk}",
+                        'number' => $user->no_telp,
+                    ]
+                    ]);
+            }
+            
             return response()->json(['success' => 'Absensi masuk berhasil']);
         } else {
             return response()->json(['error' => 'Siswa tidak ditemukan']);
@@ -164,8 +176,17 @@ class AbsensiKehadiranController extends Controller
      * @param  \App\AbsensiKehadiran  $absensiKehadiran
      * @return \Illuminate\Http\Response
      */
-    public function destroy(AbsensiKehadiran $absensiKehadiran)
+    public function destroy_siswa($id)
     {
-        //
+        AbsensiKehadiran::find($id)->delete();
+
+        return redirect()->back()->with('success', 'Absensi siswa berhasil dihapus');
+    }
+
+    public function destroy_guru($id)
+    {
+        AbsensiKehadiranGuru::find($id)->delete();
+
+        return redirect()->back()->with('success', 'Absensi guru berhasil dihapus');
     }
 }

@@ -227,3 +227,5 @@ Route::middleware(['auth'])->group(function () {
 Route::post('/absensi-kehadiran', 'AbsensiKehadiranController@store')->name('absensi-kehadiran.store');
 Route::get('/absensi/{type}', 'AbsensiKehadiranController@create')->name('absensi-kehadiran.landing-absen');
 Route::post('/absensi/search', 'AbsensiKehadiranController@search_by_rfid');
+Route::delete('/absensi-kehadiran/siswa/{id}', 'AbsensiKehadiranController@destroy_siswa')->name('absensi-kehadiran.destroy-siswa');
+Route::delete('/absensi-kehadiran/guru/{id}', 'AbsensiKehadiranController@destroy_guru')->name('absensi-kehadiran.destroy-guru');

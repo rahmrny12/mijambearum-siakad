@@ -50,7 +50,7 @@
                             <td>{{ $data->jam_pulang ?? '-' }}</td>
                             <td>{{ $data->status_masuk }}</td>
                             <td class="d-flex">
-                                <form action="{{ route('modul.destroy', $data->id) }}" method="post">
+                                <form action="{{ route('absensi-kehadiran.destroy-siswa', $data->id) }}" method="post">
                                     @csrf
                                     @method('delete')
                                     <button class="btn btn-danger btn-sm"><i class="nav-icon fas fa-trash-alt"></i>
