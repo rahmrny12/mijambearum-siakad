@@ -192,6 +192,11 @@
                                     <input type="date" id="tgl_lahir" name="tgl_lahir"
                                         class="form-control @error('tgl_lahir') is-invalid @enderror">
                                 </div>
+                                <div class="form-group">
+                                    <label for="no_telp">Nomor HP</label>
+                                    <input type="number" id="no_telp" name="no_telp"
+                                        class="form-control @error('no_telp') is-invalid @enderror">
+                                </div>
                             </div>
                         </div>
                 </div>

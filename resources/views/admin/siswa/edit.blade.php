@@ -47,6 +47,10 @@
                     <label for="tmp_lahir">Tempat Lahir</label>
                     <input type="text" id="tmp_lahir" name="tmp_lahir" value="{{ $siswa->tmp_lahir }}" class="form-control @error('tmp_lahir') is-invalid @enderror">
                 </div>
+                <div class="form-group">
+                    <label for="no_telp">Nomor HP</label>
+                    <input type="number" id="no_telp" name="no_telp" value="{{ $siswa->no_telp }}" class="form-control @error('no_telp') is-invalid @enderror">
+                </div>
             </div>
             <div class="col-md-6">
                 <div class="form-group">

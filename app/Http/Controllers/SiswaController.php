@@ -73,6 +73,7 @@ class SiswaController extends Controller
             'kelas_id' => $request->kelas_id,
             'tmp_lahir' => $request->tmp_lahir,
             'tgl_lahir' => $request->tgl_lahir,
+            'no_telp' => $request->no_telp,
             'rfid' => $request->rfid,
             'foto' => $nameFoto,
         ]);
@@ -139,6 +140,7 @@ class SiswaController extends Controller
             'kelas_id' => $request->kelas_id,
             'tmp_lahir' => $request->tmp_lahir,
             'tgl_lahir' => $request->tgl_lahir,
+            'no_telp' => $request->no_telp,
             'rfid' => $request->rfid,
         ];
         $siswa->update($siswa_data);
