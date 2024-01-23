@@ -50,10 +50,6 @@
                             <td>{{ $data->jam_pulang ?? '-' }}</td>
                             <td>{{ $data->status_masuk }}</td>
                             <td class="d-flex">
-                                <a href="{{ route('modul.show_file', Crypt::encrypt($data->id)) }}" target="_blank"
-                                    class="btn btn-info btn-sm mr-2"><i class="nav-icon fas fa-search-plus"></i>
-                                    &nbsp;
-                                    Detail</a>
                                 <form action="{{ route('modul.destroy', $data->id) }}" method="post">
                                     @csrf
                                     @method('delete')
