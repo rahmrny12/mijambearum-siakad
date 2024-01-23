@@ -51,8 +51,8 @@
     <div class="position-absolute top-0 bottom-0 left-0 right-0 my-4 bg-light d-none" id="siswa_card" style="height: 100%; width: 100%">
         <div class="card-body">
             <div class="d-flex justify-content-between align-items-center">
-                <span id="tanggal_absen">Tanggal : 00 - 00</span>
-                <span class="badge badge-success badge-pill py-3 px-4" id="waktu_absen">00:00:00</span>
+                <span class="tanggal_absen">Tanggal : 00 - 00</span>
+                <span class="badge badge-success badge-pill py-3 px-4 waktu_absen">00:00:00</span>
             </div>
             <hr>
             <div class="d-flex justify-content-between">
@@ -67,7 +67,7 @@
                     </div>
                     <div class="my-4">
                         <span class="d-block">Jenis Kelamin :</span>
-                        <span id="jenis_kelamin">-</span>
+                        <span class="jenis_kelamin">-</span>
                     </div>
                     <div class="my-4">
                         <span class="d-block">NISN :</span>
@@ -84,8 +84,8 @@
     <div class="position-absolute top-0 bottom-0 left-0 right-0 my-4 bg-light d-none" id="guru_card" style="height: 100%; width: 100%">
         <div class="card-body">
             <div class="d-flex justify-content-between align-items-center">
-                <span id="tanggal_absen">Tanggal : 00 - 00</span>
-                <span class="badge badge-success badge-pill py-3 px-4" id="waktu_absen">00:00:00</span>
+                <span class="tanggal_absen">Tanggal : 00 - 00</span>
+                <span class="badge badge-success badge-pill py-3 px-4 waktu_absen">00:00:00</span>
             </div>
             <hr>
             <div class="d-flex justify-content-between">
@@ -100,7 +100,7 @@
                     </div>
                     <div class="my-4">
                         <span class="d-block">Jenis Kelamin :</span>
-                        <span id="jenis_kelamin">-</span>
+                        <span class="jenis_kelamin">-</span>
                     </div>
                     <div class="my-4">
                         <span class="d-block">Tempat Lahir :</span>

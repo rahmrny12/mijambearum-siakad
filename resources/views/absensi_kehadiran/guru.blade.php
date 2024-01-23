@@ -54,7 +54,7 @@
                                     class="btn btn-info btn-sm mr-2"><i class="nav-icon fas fa-search-plus"></i>
                                     &nbsp;
                                     Detail</a>
-                                <form action="{{ route('modul.destroy', $data->id) }}" method="post">
+                                <form action="{{ route('absensi-kehadiran.destroy-guru', $data->id) }}" method="post">
                                     @csrf
                                     @method('delete')
                                     <button class="btn btn-danger btn-sm"><i class="nav-icon fas fa-trash-alt"></i>

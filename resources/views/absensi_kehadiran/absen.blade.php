@@ -20,13 +20,13 @@
                                 if (type == 'siswa') {
                                     $('#nama_siswa').html(result.nama_siswa);
                                     $('#kelas').html(result.kelas.nama_kelas);
-                                    $('#jenis_kelamin').html(result.jk == "L" ? "Laki-laki" : "Perempuan");
+                                    $('.jenis_kelamin').html(result.jk == "L" ? "Laki-laki" : "Perempuan");
                                     $('#nisn').html(result.nis);
                                     $('#foto').attr('src', `{{ asset('') }}` + result.foto);
                                 } else {
                                     $('#nama_guru').html(result.nama_guru);
                                     $('#nip').html(result.nip);
-                                    $('#jenis_kelamin').html(result.jk == "L" ? "Laki-laki" : "Perempuan");
+                                    $('.jenis_kelamin').html(result.jk == "L" ? "Laki-laki" : "Perempuan");
                                     $('#tmp_lahir').html(result.tmp_lahir);
                                     $('#tgl_lahir').html(result.tgl_lahir);
                                     $('#foto').attr('src', `{{ asset('') }}` + result.foto);
@@ -52,7 +52,7 @@
                                             console.log('tes')
                                             $("#siswa_card").addClass('d-none');
                                             $("#guru_card").addClass('d-none');
-                                        }, 5000);
+                                        }, 2000);
                                     })
                                     .catch(error => {
                                         console.log(error)
@@ -97,10 +97,10 @@
                                 
                                 let today = new Date();
                                 let formattedDate = today.getDate() + '-' + (today.getMonth() + 1) + '-' + today.getFullYear();
-                                $('#tanggal_absen').html("Tanggal : " + formattedDate);
+                                $('.tanggal_absen').html("Tanggal : " + formattedDate);
 
                                 let formattedTime = today.toLocaleTimeString('en-US', { hour12: false });
-                                $('#waktu_absen').html(formattedTime);
+                                $('.waktu_absen').html(formattedTime);
                                 
                                 resolve(result);
                             }
