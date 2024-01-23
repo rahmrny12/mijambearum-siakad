@@ -12,63 +12,65 @@
             function submitAbsen(e, keyword) {
                 const isSiswaCardShowing = !$("#siswa_card").hasClass('d-none');
                 const isGuruCardShowing = !$("#guru_card").hasClass('d-none');
-                if (e.key === 'Enter' && !isSiswaCardShowing && !isGuruCardShowing) {
-                    searchByRFID(keyword.value)
-                        .then(async (result) => {
-                            const type = result.hasOwnProperty('nama_guru') ? 'guru' : 'siswa';
-                            if (type == 'siswa') {
-                                $('#nama_siswa').html(result.nama_siswa);
-                                $('#kelas').html(result.kelas.nama_kelas);
-                                $('#jenis_kelamin').html(result.jk == "L" ? "Laki-laki" : "Perempuan");
-                                $('#nisn').html(result.nis);
-                                $('#foto').attr('src', `{{ asset('') }}` + result.foto);
-                            } else {
-                                $('#nama_guru').html(result.nama_guru);
-                                $('#nip').html(result.nip);
-                                $('#jenis_kelamin').html(result.jk == "L" ? "Laki-laki" : "Perempuan");
-                                $('#tmp_lahir').html(result.tmp_lahir);
-                                $('#tgl_lahir').html(result.tgl_lahir);
-                                $('#foto').attr('src', `{{ asset('') }}` + result.foto);
-                            }
-                            
-                            await sendAbsensi(keyword)
-                                .then(response => {
-                                    const type = Object.keys(response)[0];
-                                    const message = response[type];
-                                    console.log(response)
+                if (!isSiswaCardShowing && !isGuruCardShowing) {
+                    if (e.key === 'Enter') {
+                        searchByRFID(keyword.value)
+                            .then(async (result) => {
+                                const type = result.hasOwnProperty('nama_guru') ? 'guru' : 'siswa';
+                                if (type == 'siswa') {
+                                    $('#nama_siswa').html(result.nama_siswa);
+                                    $('#kelas').html(result.kelas.nama_kelas);
+                                    $('#jenis_kelamin').html(result.jk == "L" ? "Laki-laki" : "Perempuan");
+                                    $('#nisn').html(result.nis);
+                                    $('#foto').attr('src', `{{ asset('') }}` + result.foto);
+                                } else {
+                                    $('#nama_guru').html(result.nama_guru);
+                                    $('#nip').html(result.nip);
+                                    $('#jenis_kelamin').html(result.jk == "L" ? "Laki-laki" : "Perempuan");
+                                    $('#tmp_lahir').html(result.tmp_lahir);
+                                    $('#tgl_lahir').html(result.tgl_lahir);
+                                    $('#foto').attr('src', `{{ asset('') }}` + result.foto);
+                                }
+                                
+                                await sendAbsensi(keyword)
+                                    .then(response => {
+                                        const type = Object.keys(response)[0];
+                                        const message = response[type];
+                                        console.log(response)
 
-                                    toastr.options.positionClass = "toast-top-center";
-                                    if (type == 'success') {
-                                        toastr.success(message)
-                                    } else if (type == 'warning') {
-                                        toastr.warning(message)
-                                    } else if (type == 'error') {
-                                        toastr.error(message)
-                                    }
-                                    toastr.options.positionClass = "toast-top-right";
-                                    
-                                    const removeCard = setTimeout(() => {
-                                        console.log('tes')
-                                        $("#siswa_card").addClass('d-none');
-                                        $("#guru_card").addClass('d-none');
-                                    }, 5000);
-                                })
-                                .catch(error => {
+                                        toastr.options.positionClass = "toast-top-center";
+                                        if (type == 'success') {
+                                            toastr.success(message)
+                                        } else if (type == 'warning') {
+                                            toastr.warning(message)
+                                        } else if (type == 'error') {
+                                            toastr.error(message)
+                                        }
+                                        toastr.options.positionClass = "toast-top-right";
+                                        
+                                        const removeCard = setTimeout(() => {
+                                            console.log('tes')
+                                            $("#siswa_card").addClass('d-none');
+                                            $("#guru_card").addClass('d-none');
+                                        }, 5000);
+                                    })
+                                    .catch(error => {
+                                        console.log(error)
+                                        toastr.error("Terjadi kesalahan saat mengirim absensi. " + error.status == undefined ? '' : error.status + " " + error.statusText == undefined ? '' : error.statusText)
+                                    })
+                            })
+                            .catch(error => {
+                                if (error.status == 404) {
+                                    toastr.error("Data tidak ditemukan.")
+                                } else {
                                     console.log(error)
-                                    toastr.error("Terjadi kesalahan saat mengirim absensi. " + error.status == undefined ? '' : error.status + " " + error.statusText == undefined ? '' : error.statusText)
-                                })
-                        })
-                        .catch(error => {
-                            if (error.status == 404) {
-                                toastr.error("Data tidak ditemukan.")
-                            } else {
-                                console.log(error)
-                                toastr.error("Terjadi kesalahan saat mengambil data. " + error.status + " " + error.statusText)
-                            }
-                        })
-                        .finally(() => {
-                            $('#input-search-siswa').val('')
-                        })
+                                    toastr.error("Terjadi kesalahan saat mengambil data. " + error.status + " " + error.statusText)
+                                }
+                            })
+                            .finally(() => {
+                                $('#input-search-siswa').val('')
+                            })
+                    }
                 } else {
                     $('#input-search-siswa').val('')
                 }
