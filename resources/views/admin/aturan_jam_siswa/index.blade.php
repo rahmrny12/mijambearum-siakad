@@ -110,9 +110,7 @@
     function getCreateJamAturanSiswa(){
       $("#judul").text('Tambah Data Jam Aturan Siswa');
       $('#id').val('');
-      $('#form_nama_aturan').html(`
-        
-      `);
+      $('#form_nama_aturan').val(``);
       $('#nama_aturan').val('');
       $('#jam_masuk').val('');
       $('#jam_pulang').val('');
