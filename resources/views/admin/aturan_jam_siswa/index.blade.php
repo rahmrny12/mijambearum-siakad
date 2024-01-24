@@ -75,7 +75,7 @@
             <div class="col-md-12">
               <input type="hidden" id="id" name="id">
               <div class="form-group" id="form_nama_aturan">
-                <label for="nama_aturan">Nama Kelas</label>
+                <label for="nama_aturan">Nama Aturan</label>
                 <input type='text' id="nama_aturan" onkeyup="this.value = this.value.toUpperCase()" name='nama_aturan' class="form-control @error('nama_aturan') is-invalid @enderror" placeholder="{{ __('Nama Aturan') }}">
               </div>
               <div class="form-group" id="form_jam_masuk">
@@ -110,9 +110,7 @@
     function getCreateJamAturanSiswa(){
       $("#judul").text('Tambah Data Jam Aturan Siswa');
       $('#id').val('');
-      $('#form_nama_aturan').html(`
-        
-      `);
+      $('#form_nama_aturan').val(``);
       $('#nama_aturan').val('');
       $('#jam_masuk').val('');
       $('#jam_pulang').val('');

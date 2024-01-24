@@ -50,6 +50,10 @@ class AturanJamSiswaController extends Controller
             'jam_pulang' => 'required',
         ]);
 
+        if ($request->status == 1) {
+            AturanJamSiswa::where('id', '!=', $request->id)->update(['status' => 0]);
+        }
+
         AturanJamSiswa::updateOrCreate(
             [
                 'id' => $request->id
@@ -113,6 +117,7 @@ class AturanJamSiswaController extends Controller
                 'nama_aturan' => $val->nama_aturan,
                 'jam_masuk' => $val->jam_masuk,
                 'jam_pulang' => $val->jam_pulang,
+                'status' => $val->status,
             );
         }
         return response()->json($newForm);
