@@ -11,6 +11,8 @@ use GuzzleHttp\Exception\RequestException;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use GuzzleHttp\Client;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\AbsensiExport;
 
 class AbsensiKehadiranController extends Controller
 {
@@ -59,6 +61,9 @@ class AbsensiKehadiranController extends Controller
         
         if ($user) {
             $aturan_jam_siswa = AturanJamSiswa::where('status', 1)->first();
+
+            if (!$aturan_jam_siswa)
+                return response()->json(['warning' => 'Tidak ada jam mengajar yang aktif']);
 
             $jam_sekarang = Carbon::now()->toTimeString();
 
@@ -188,5 +193,10 @@ class AbsensiKehadiranController extends Controller
         AbsensiKehadiranGuru::find($id)->delete();
 
         return redirect()->back()->with('success', 'Absensi guru berhasil dihapus');
+    }
+
+    public function export_excel()
+    {
+        return Excel::download(new AbsensiExport, 'guru.xlsx');
     }
 }

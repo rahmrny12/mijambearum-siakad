@@ -55,7 +55,6 @@
                                         }, 2000);
                                     })
                                     .catch(error => {
-                                        console.log(error)
                                         toastr.error("Terjadi kesalahan saat mengirim absensi. " + error.status == undefined ? '' : error.status + " " + error.statusText == undefined ? '' : error.statusText)
                                     })
                             })

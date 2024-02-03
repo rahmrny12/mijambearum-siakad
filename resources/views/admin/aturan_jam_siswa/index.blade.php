@@ -1,7 +1,7 @@
 @extends('template_backend.home')
-@section('heading', 'Data Aturan Jam Siswa')
+@section('heading', 'Data Aturan Jam Absensi')
 @section('page')
-  <li class="breadcrumb-item active">Data Aturan Jam Siswa</li>
+  <li class="breadcrumb-item active">Data Aturan Jam Absensi</li>
 @endsection
 @section('content')
 <div class="col-md-12">
@@ -9,7 +9,7 @@
         <div class="card-header">
           <h3 class="card-title">
               <button type="button" class="btn btn-primary btn-sm" onclick="getCreateJamAturanSiswa()" data-toggle="modal" data-target="#form-aturan-jam-siswa">
-                  <i class="nav-icon fas fa-folder-plus"></i> &nbsp; Tambah Data Aturan Jam Siswa
+                  <i class="nav-icon fas fa-folder-plus"></i> &nbsp; Tambah Data Aturan Jam Absensi
               </button>
           </h3>
         </div>
@@ -38,7 +38,7 @@
                       {{ $data->status == 0 ? 'Tidak Aktif' : 'Aktif' }}
                     </td>
                     <td>
-                        <form action="{{ route('kelas.destroy', $data->id) }}" method="post">
+                        <form action="{{ route('aturan-jam-siswa.destroy', $data->id) }}" method="post">
                             @csrf
                             @method('delete')
                             <button type="button" class="btn btn-success btn-sm" onclick="getEditAturanJamSiswa({{$data->id}})" data-toggle="modal" data-target="#form-aturan-jam-siswa">
@@ -87,7 +87,7 @@
                 <input type='time' id="jam_pulang" name='jam_pulang' class="form-control @error('jam_pulang') is-invalid @enderror" placeholder="{{ __('Jam Pulang') }}">
               </div>
               <div class="form-group" id="form_status">
-                <input type="radio" name="status" value="1" id="optionStatusAktif">
+                <input type="radio" name="status" value="1" id="optionStatusAktif" checked>
                 <label for="optionStatusAktif">Aktif</label>
                 <input type="radio" name="status" value="0" id="optionStatusNonaktif">
                 <label for="optionStatusNonaktif">Tidak Aktif</label>
@@ -127,7 +127,7 @@
         success:function(result){
           if(result){
             $.each(result,function(index, val){
-              $("#judul").text('Edit Data Aturan Jam Siswa ' + val.nama_aturan);
+              $("#judul").text('Edit Data Aturan Jam Absensi ' + val.nama_aturan);
               $('#id').val(val.id);
               $('#nama_aturan').val(val.nama_aturan);
               $('#jam_masuk').val(val.jam_masuk);

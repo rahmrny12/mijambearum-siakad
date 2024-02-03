@@ -4,10 +4,9 @@
     
     $user_menu = UserMenu::with('role')
         ->whereHas('role', function ($query) {
-            return $query->where('role', auth()->user()->role);
+            return $query->whereIn('role', json_decode(auth()->user()->roles));
         })
         ->get();
-        // dd($user_menu->pluck('title'))
     // $user_menu = Role::with('menu')
     //     ->where('role', auth()->user()->role)
     //     ->get();

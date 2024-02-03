@@ -269,12 +269,14 @@
         url:"{{ url('/kelas/edit/json') }}",
         success:function(result){
           if(result){
+            console.log(result)
             $.each(result,function(index, val){
               $("#judul").text('Edit Data Kelas ' + val.nama);
               $('#id').val(val.id);
               $('#form_nama').html('');
               $('#form_paket').html('');
               $("#form_paket").append(form_paket);
+              $('#guru_id').val(val.guru_id);
               $('#nama_kelas').val(val.nama);
               $("#paket_id").val(val.paket_id);
               $('#guru_id').val(val.guru_id);

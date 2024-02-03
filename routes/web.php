@@ -128,6 +128,9 @@ Route::middleware(['auth'])->group(function () {
       Route::get('/user/trash', 'UserController@trash')->name('user.trash');
       Route::get('/user/restore/{id}', 'UserController@restore')->name('user.restore');
       Route::delete('/user/kill/{id}', 'UserController@kill')->name('user.kill');
+      Route::get('/aturan-jam-siswa/trash', 'AturanJamSiswaController@trash')->name('aturan-jam-siswa.trash');
+      Route::get('/aturan-jam-siswa/restore/{id}', 'AturanJamSiswaController@restore')->name('aturan-jam-siswa.restore');
+      Route::delete('/aturan-jam-siswa/kill/{id}', 'AturanJamSiswaController@kill')->name('aturan-jam-siswa.kill');
     // });
 
     Route::get('/admin/home', 'HomeController@admin')->name('admin.home');
@@ -229,3 +232,4 @@ Route::get('/absensi/{type}', 'AbsensiKehadiranController@create')->name('absens
 Route::post('/absensi/search', 'AbsensiKehadiranController@search_by_rfid');
 Route::delete('/absensi-kehadiran/siswa/{id}', 'AbsensiKehadiranController@destroy_siswa')->name('absensi-kehadiran.destroy-siswa');
 Route::delete('/absensi-kehadiran/guru/{id}', 'AbsensiKehadiranController@destroy_guru')->name('absensi-kehadiran.destroy-guru');
+Route::get('/absensi-kehadiran/export-excel', 'AbsensiKehadiranController@export_excel')->name('absensi-kehadiran.export-excel');

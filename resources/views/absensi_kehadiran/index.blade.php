@@ -20,6 +20,8 @@
                                 @endforeach --}}
                             </select>
                         </div>
+                        <a href="{{ route('absensi-kehadiran.export-excel') }}" class="btn btn-success btn-sm my-3" target="_blank"><i
+                            class="nav-icon fas fa-file-export"></i> &nbsp; EXPORT EXCEL</a>
                 </form>
             </div>
             <table id="example1" class="table table-bordered table-striped table-hover">

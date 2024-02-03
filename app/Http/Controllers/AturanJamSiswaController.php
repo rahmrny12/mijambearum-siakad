@@ -100,12 +100,9 @@ class AturanJamSiswaController extends Controller
     public function destroy($id)
     {
         $aturan_jam_siswa = AturanJamSiswa::findorfail($id);
-        $countAbsen = AbsensiKehadiran::where('aturan_jam_siswa_id', $aturan_jam_siswa->id)->count();
-        if ($countAbsen >= 1) {
-            return redirect()->back()->with('warning', 'Data aturan jam siswa sudah digunakan!');
-        }
+        $aturan_jam_siswa->update(['status' => 0]);
         $aturan_jam_siswa->delete();
-        return redirect()->back()->with('warning', 'Data kelas berhasil dihapus! (Silahkan cek trash data kelas)');
+        return redirect()->back()->with('warning', 'Aturan jam siswa berhasil dihapus.');
     }
     
     public function getEdit(Request $request)
@@ -121,5 +118,26 @@ class AturanJamSiswaController extends Controller
             );
         }
         return response()->json($newForm);
+    }
+
+    public function trash()
+    {
+        $aturan_jam_siswa = AturanJamSiswa::onlyTrashed()->get();
+        return view('admin.aturan_jam_siswa.trash', compact('aturan_jam_siswa'));
+    }
+
+    public function restore($id)
+    {
+        $id = Crypt::decrypt($id);
+        $aturan_jam_siswa = AturanJamSiswa::withTrashed()->findorfail($id);
+        $aturan_jam_siswa->restore();
+        return redirect()->back()->with('info', 'Data aturan jam siswa berhasil direstore! (Silahkan cek data aturan jam siswa)');
+    }
+
+    public function kill($id)
+    {
+        $aturan_jam_siswa = AturanJamSiswa::withTrashed()->findorfail($id);
+        $aturan_jam_siswa->forceDelete();
+        return redirect()->back()->with('success', 'Data aturan jam siswa berhasil dihapus secara permanent');
     }
 }
