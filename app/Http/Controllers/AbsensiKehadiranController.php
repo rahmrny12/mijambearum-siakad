@@ -7,12 +7,15 @@ use App\AbsensiKehadiran;
 use App\AturanJamSiswa;
 use App\Guru;
 use App\Siswa;
+use App\Kelas;
+use Crypt;
 use GuzzleHttp\Exception\RequestException;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use GuzzleHttp\Client;
 use Maatwebsite\Excel\Facades\Excel;
-use App\Exports\AbsensiExport;
+use App\Exports\AbsensiSiswaExport;
+use App\Exports\AbsensiGuruExport;
 
 class AbsensiKehadiranController extends Controller
 {
@@ -23,9 +26,18 @@ class AbsensiKehadiranController extends Controller
      */
     public function index()
     {
-        $absensi_kehadiran = AbsensiKehadiran::orderByDesc('id')->get();
-        
-        return view('absensi_kehadiran.index', compact('absensi_kehadiran'));
+        $kelas = Kelas::OrderBy('nama_kelas', 'asc')->get();
+        return view('absensi_kehadiran.index', compact('kelas'));
+    }
+
+    public function kelas($id)
+    {
+        $id = Crypt::decrypt($id);
+        $absensi_kehadiran = AbsensiKehadiran::whereHas('siswa', function ($query) use ($id) {
+            $query->where('kelas_id', $id);
+        })->get();
+        $kelas = Kelas::findorfail($id);
+        return view('admin.siswa.show', compact('absensi_kehadiran', 'kelas'));
     }
 
     public function guru()
@@ -195,8 +207,14 @@ class AbsensiKehadiranController extends Controller
         return redirect()->back()->with('success', 'Absensi guru berhasil dihapus');
     }
 
-    public function export_excel()
+    public function export_excel_siswa($id)
     {
-        return Excel::download(new AbsensiExport, 'guru.xlsx');
+        $id = Crypt::decrypt($id);
+        return Excel::download(new AbsensiSiswaExport($id), 'guru.xlsx');
+    }
+
+    public function export_excel_guru()
+    {
+        return Excel::download(new AbsensiGuruExport, 'guru.xlsx');
     }
 }

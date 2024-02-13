@@ -223,7 +223,8 @@ Route::middleware(['auth'])->group(function () {
   Route::resource('/aturan-jam-siswa', 'AturanJamSiswaController');
   Route::get('/aturan-jam-siswa/edit/json', 'AturanJamSiswaController@getEdit');
 
-  Route::get('/absensi-kehadiran', 'AbsensiKehadiranController@index')->name('absensi-kehadiran.index');
+  Route::get('/absensi-kehadiran-siswa', 'AbsensiKehadiranController@index')->name('absensi-kehadiran.index');
+  Route::get('/absensi-kehadiran-siswa/kelas/{id}', 'AbsensiKehadiranController@kelas')->name('absensi-kehadiran.kelas');
   Route::get('/absensi-kehadiran/guru', 'AbsensiKehadiranController@guru')->name('absensi-kehadiran.guru');
 });
 
@@ -232,4 +233,5 @@ Route::get('/absensi/{type}', 'AbsensiKehadiranController@create')->name('absens
 Route::post('/absensi/search', 'AbsensiKehadiranController@search_by_rfid');
 Route::delete('/absensi-kehadiran/siswa/{id}', 'AbsensiKehadiranController@destroy_siswa')->name('absensi-kehadiran.destroy-siswa');
 Route::delete('/absensi-kehadiran/guru/{id}', 'AbsensiKehadiranController@destroy_guru')->name('absensi-kehadiran.destroy-guru');
-Route::get('/absensi-kehadiran/export-excel', 'AbsensiKehadiranController@export_excel')->name('absensi-kehadiran.export-excel');
+Route::get('/absensi-kehadiran/siswa/export-excel/{id}', 'AbsensiKehadiranController@export_excel_siswa')->name('absensi-kehadiran.siswa.export-excel');
+Route::get('/absensi-kehadiran/guru/export-excel', 'AbsensiKehadiranController@export_excel_guru')->name('absensi-kehadiran.guru.export-excel');

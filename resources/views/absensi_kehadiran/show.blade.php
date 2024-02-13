@@ -9,7 +9,7 @@
             <div class="card-body">
                 <form action="" method="get">
                     <div class="d-flex justify-content-end">
-                        <a href="{{ route('absensi-kehadiran.siswa.export-excel', Crypt::encrypt($kelas->id)) }}" class="btn btn-success btn-sm my-3" target="_blank"><i
+                        <a href="{{ route('absensi-kehadiran.siswa.export-excel') }}" class="btn btn-success btn-sm my-3" target="_blank"><i
                             class="nav-icon fas fa-file-export"></i> &nbsp; EXPORT EXCEL</a>
                 </form>
             </div>

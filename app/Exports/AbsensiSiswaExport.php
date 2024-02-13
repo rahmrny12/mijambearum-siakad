@@ -10,8 +10,15 @@ use Maatwebsite\Excel\Concerns\WithHeadings;
 use PhpOffice\PhpSpreadsheet\Style\NumberFormat;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 
-class AbsensiExport implements FromCollection, ShouldAutoSize, WithColumnFormatting, WithHeadings
+class AbsensiSiswaExport implements FromCollection, ShouldAutoSize, WithColumnFormatting, WithHeadings
 {
+    protected $id;
+
+    public function __construct($id)
+    {
+        $this->id = $id;
+    }
+    
     /**
      * @return \Illuminate\Support\Collection
      */
@@ -19,6 +26,7 @@ class AbsensiExport implements FromCollection, ShouldAutoSize, WithColumnFormatt
     {
         $absensi_kehadiran = AbsensiKehadiran::select('absen_kehadiran_siswa.tanggal', 'absen_kehadiran_siswa.jam_masuk', 'absen_kehadiran_siswa.jam_pulang', 'absen_kehadiran_siswa.status_masuk', 'kelas.nama_kelas', 'siswa.nama_siswa', 'siswa.no_induk', 'siswa.nis')->leftJoin('siswa', 'siswa.id', '=', 'absen_kehadiran_siswa.id_siswa')
         ->leftJoin('kelas', 'kelas.id', '=', 'siswa.kelas_id')
+        ->where('kelas.id', '=', $this->id)
         ->get();
         return $absensi_kehadiran;
     }
@@ -40,6 +48,12 @@ class AbsensiExport implements FromCollection, ShouldAutoSize, WithColumnFormatt
     public function columnFormats(): array
     {
         return [
+            'A' => NumberFormat::FORMAT_TEXT,
+            'B' => NumberFormat::FORMAT_TEXT,
+            'C' => NumberFormat::FORMAT_TEXT,
+            'D' => NumberFormat::FORMAT_TEXT,
+            'E' => NumberFormat::FORMAT_TEXT,
+            'F' => NumberFormat::FORMAT_TEXT,
             'G' => NumberFormat::FORMAT_TEXT,
             'H' => NumberFormat::FORMAT_TEXT,
         ];
