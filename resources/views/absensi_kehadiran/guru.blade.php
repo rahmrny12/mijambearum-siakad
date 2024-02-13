@@ -9,17 +9,6 @@
             <div class="card-body">
                 <form action="" method="get">
                     <div class="d-flex justify-content-between">
-                        <div class="mb-3 col-md-3 px-0">
-                            <select id="guru" type="text" class="form-control select2bs4" name="guru"
-                                autocomplete="guru" onchange="getMapelGuru()">
-                                <option value="">Pilih Kelas</option>
-                                {{-- @foreach ($guru as $item)
-                                    <option @if (request('guru') == $item->id) selected @endif value="{{ $item->id }}">
-                                        {{ $item->nama_guru }}
-                                    </option>
-                                @endforeach --}}
-                            </select>
-                        </div>
                         <a href="{{ route('absensi-kehadiran.guru.export-excel') }}" class="btn btn-success btn-sm my-3" target="_blank"><i
                             class="nav-icon fas fa-file-export"></i> &nbsp; EXPORT EXCEL</a>
                 </form>

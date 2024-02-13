@@ -215,6 +215,6 @@ class AbsensiKehadiranController extends Controller
 
     public function export_excel_guru()
     {
-        return Excel::download(new AbsensiGuruExport, 'guru.xlsx');
+        return Excel::download(new AbsensiGuruExport(), 'guru.xlsx');
     }
 }
