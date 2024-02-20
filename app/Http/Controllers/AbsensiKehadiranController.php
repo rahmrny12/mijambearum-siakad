@@ -99,14 +99,20 @@ class AbsensiKehadiranController extends Controller
 
                     $existing_absen->refresh();
 
-                    if ($is_siswa && $user->no_telp != 0) {
+                    if ($user->no_telp != 0) {
                         $formattedDate = Carbon::parse($existing_absen->tanggal)->locale('id')->isoFormat('D MMMM YYYY');
 
+                        if ($is_siswa) {
+                            $message = "INFO ABSENSI MIS JAMBE ARUM\n\nNAMA : {$user->nama_siswa}\nKELAS : {$user->kelas->nama_kelas}\n\nTELAH MELAKUKAN ABSENSI PULANG PADA PUKUL {$existing_absen->jam_pulang} TANGGAL {$formattedDate}\n";
+                        } else {
+                            $message = "INFO ABSENSI MIS JAMBE ARUM\n\nNAMA : {$user->nama_guru}\n\nTELAH MELAKUKAN ABSENSI PULANG PADA PUKUL {$existing_absen->jam_pulang} TANGGAL {$formattedDate}\n";
+                        }
+                            
                         $client = new Client;
                         $request = $client->post('http://128.199.217.52/send-message', [
                             'form_params' => [
-                                'message' => "INFO ABSENSI MIS JAMBE ARUM\n\nNAMA : {$user->nama_siswa}\nKELAS : {$user->kelas->nama_kelas}\n\nTELAH MELAKUKAN ABSENSI PULANG PADA PUKUL {$existing_absen->jam_pulang} TANGGAL {$formattedDate}\n",
-                                'number' => $user->no_telp,
+                                'message' => $message,
+                                'number' => $user->no_telp
                             ]
                             ]);
                     }
@@ -140,13 +146,19 @@ class AbsensiKehadiranController extends Controller
                 ]);
             }
 
-            if ($is_siswa && $user->no_telp != 0) {
+            if ($user->no_telp != 0) {
                 $formattedDate = Carbon::parse($inserted_absensi->tanggal)->locale('id')->isoFormat('D MMMM YYYY');
+
+                if ($is_siswa) {
+                    $message = "INFO ABSENSI MIS JAMBE ARUM\n\nNAMA : {$user->nama_siswa}\nKELAS : {$user->kelas->nama_kelas}\n\nTELAH MELAKUKAN ABSENSI PADA PUKUL {$inserted_absensi->jam_masuk} TANGGAL {$formattedDate}\n";
+                } else {
+                    $message = "INFO ABSENSI MIS JAMBE ARUM\n\nNAMA : {$user->nama_guru}\n\nTELAH MELAKUKAN ABSENSI PADA PUKUL {$inserted_absensi->jam_masuk} TANGGAL {$formattedDate}\n";
+                }
                 
                 $client = new Client;
                 $request = $client->post('http://128.199.217.52/send-message', [
                     'form_params' => [
-                        'message' => "INFO ABSENSI MIS JAMBE ARUM\n\nNAMA : {$user->nama_siswa}\nKELAS : {$user->kelas->nama_kelas}\n\nTELAH MELAKUKAN ABSENSI PADA PUKUL {$inserted_absensi->jam_masuk} TANGGAL {$formattedDate}\n\nSTATUS : {$inserted_absensi->status_masuk}",
+                        'message' => $message,
                         'number' => $user->no_telp,
                     ]
                     ]);
