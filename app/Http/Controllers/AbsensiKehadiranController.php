@@ -37,7 +37,7 @@ class AbsensiKehadiranController extends Controller
             $query->where('kelas_id', $id);
         })->get();
         $kelas = Kelas::findorfail($id);
-        return view('admin.siswa.show', compact('absensi_kehadiran', 'kelas'));
+        return view('absensi_kehadiran.show', compact('absensi_kehadiran', 'kelas'));
     }
 
     public function guru()
@@ -226,11 +226,13 @@ class AbsensiKehadiranController extends Controller
     public function export_excel_siswa($id)
     {
         $id = Crypt::decrypt($id);
-        return Excel::download(new AbsensiSiswaExport($id), 'guru.xlsx');
+        $date = Carbon::now()->toDateString();
+        return Excel::download(new AbsensiSiswaExport($id), "data-absensi-siswa-$date.xlsx");
     }
 
     public function export_excel_guru()
     {
-        return Excel::download(new AbsensiGuruExport(), 'guru.xlsx');
+        $date = Carbon::now()->toDateString();
+        return Excel::download(new AbsensiGuruExport(), "data-absensi-guru-$date.xlsx");
     }
 }

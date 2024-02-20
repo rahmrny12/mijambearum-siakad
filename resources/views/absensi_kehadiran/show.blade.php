@@ -9,7 +9,7 @@
             <div class="card-body">
                 <form action="" method="get">
                     <div class="d-flex justify-content-end">
-                        <a href="{{ route('absensi-kehadiran.siswa.export-excel') }}" class="btn btn-success btn-sm my-3" target="_blank"><i
+                        <a href="{{ route('absensi-kehadiran.siswa.export-excel', Crypt::encrypt($kelas->id)) }}" class="btn btn-success btn-sm my-3" target="_blank"><i
                             class="nav-icon fas fa-file-export"></i> &nbsp; EXPORT EXCEL</a>
                 </form>
             </div>
@@ -41,7 +41,7 @@
                             <td>{{ $data->jam_pulang ?? '-' }}</td>
                             <td>{{ $data->status_masuk }}</td>
                             <td class="d-flex">
-                                <form action="{{ route('absensi-kehadiran.destroy-siswa', $data->id) }}" method="post">
+                                <form action="{{ route('absensi-kehadiran.destroy-siswa', $data->id) }}" method="post" onsubmit="return confirm('Yakin ingin menghapus?')">
                                     @csrf
                                     @method('delete')
                                     <button class="btn btn-danger btn-sm"><i class="nav-icon fas fa-trash-alt"></i>
