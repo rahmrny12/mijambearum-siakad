@@ -96,6 +96,20 @@ class AbsensiKehadiranController extends Controller
                     $existing_absen->update([
                         'jam_pulang' => $jam_sekarang,
                     ]);
+
+                    $existing_absen->refresh();
+
+                    if ($is_siswa && $user->no_telp != 0) {
+                        $formattedDate = Carbon::parse($existing_absen->tanggal)->locale('id')->isoFormat('D MMMM YYYY');
+
+                        $client = new Client;
+                        $request = $client->post('http://128.199.217.52/send-message', [
+                            'form_params' => [
+                                'message' => "INFO ABSENSI MIS JAMBE ARUM\n\nNAMA : {$user->nama_siswa}\nKELAS : {$user->kelas->nama_kelas}\n\nTELAH MELAKUKAN ABSENSI PULANG PADA PUKUL {$existing_absen->jam_pulang} TANGGAL {$formattedDate}\n",
+                                'number' => $user->no_telp,
+                            ]
+                            ]);
+                    }
                     
                     return response()->json(['success' => 'Absensi pulang berhasil']);
                 }
@@ -127,10 +141,12 @@ class AbsensiKehadiranController extends Controller
             }
 
             if ($is_siswa && $user->no_telp != 0) {
+                $formattedDate = Carbon::parse($inserted_absensi->tanggal)->locale('id')->isoFormat('D MMMM YYYY');
+                
                 $client = new Client;
                 $request = $client->post('http://128.199.217.52/send-message', [
                     'form_params' => [
-                        'message' => "INFO ABSENSI MIS JAMBE ARUM\n\nNAMA : {$user->nama_siswa}\nKELAS : {$user->kelas->nama_kelas}\n\nTELAH MELAKUKAN ABSENSI PADA PUKUL {$inserted_absensi->jam_masuk} TANGGAL {$inserted_absensi->tanggal}\n\nSTATUS : {$inserted_absensi->status_masuk}",
+                        'message' => "INFO ABSENSI MIS JAMBE ARUM\n\nNAMA : {$user->nama_siswa}\nKELAS : {$user->kelas->nama_kelas}\n\nTELAH MELAKUKAN ABSENSI PADA PUKUL {$inserted_absensi->jam_masuk} TANGGAL {$formattedDate}\n\nSTATUS : {$inserted_absensi->status_masuk}",
                         'number' => $user->no_telp,
                     ]
                     ]);

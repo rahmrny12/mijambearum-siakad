@@ -71,7 +71,7 @@
                         <a href="{{ route('aturan-jam-siswa.index') }}" class="nav-link">
                             <i class="nav-icon fas fa-user"></i>
                             <p>
-                                Aturan Jam Siswa
+                                Aturan Jam Absensi
                             </p>
                         </a>
                     </li>

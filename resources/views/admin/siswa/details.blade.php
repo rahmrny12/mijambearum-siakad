@@ -28,7 +28,7 @@
                     @endif
                     <h5 class="card-title card-text mb-2">Tempat Lahir : {{ $siswa->tmp_lahir }}</h5>
                     <h5 class="card-title card-text mb-2">Tanggal Lahir : {{ date('l, d F Y', strtotime($siswa->tgl_lahir)) }}</h5>
-                    <h5 class="card-title card-text mb-2">No. Telepon : {{ $siswa->telp }}</h5>
+                    <h5 class="card-title card-text mb-2">No. Telepon : {{ $siswa->no_telp }}</h5>
                 </div>
             </div>
         </div>

@@ -1,108 +1,65 @@
 @extends('template_backend.home')
-@section('heading', 'Absensi Kehadiran Siswa')
+@section('heading')
+  Data Siswa {{ $kelas->nama_kelas }}
+@endsection
 @section('page')
-    <li class="breadcrumb-item active">Absensi Kehadiran Siswa</li>
+  <li class="breadcrumb-item active"><a href="{{ route('siswa.index') }}">Siswa</a></li>
+  <li class="breadcrumb-item active">{{ $kelas->nama_kelas }}</li>
 @endsection
 @section('content')
-    <div class="col-md-12">
-        <div class="card">
-            <div class="card-body">
-                <form action="" method="get">
-                    <div class="d-flex justify-content-end">
-                        <a href="{{ route('absensi-kehadiran.siswa.export-excel', Crypt::encrypt($kelas->id)) }}" class="btn btn-success btn-sm my-3" target="_blank"><i
-                            class="nav-icon fas fa-file-export"></i> &nbsp; EXPORT EXCEL</a>
-                </form>
-            </div>
-            <table id="example1" class="table table-bordered table-striped table-hover">
-                <thead>
+<div class="col-md-12">
+    <div class="card">
+        <div class="card-header">
+            <a href="{{ route('siswa.index') }}" class="btn btn-default btn-sm"><i class="nav-icon fas fa-arrow-left"></i> &nbsp; Kembali</a>
+        </div>
+        <!-- /.card-header -->
+        <div class="card-body">
+          <table id="example1" class="table table-bordered table-striped table-hover">
+            <thead>
+                <tr>
+                    <th>No.</th>
+                    <th>Nama Siswa</th>
+                    <th>No Induk</th>
+                    <th>Foto</th>
+                    <th>Aksi</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach ($siswa as $data)
                     <tr>
-                        <th>No.</th>
-                        <th>Tanggal</th>
-                        <th>Foto Siswa</th>
-                        <th>Nama Siswa</th>
-                        <th>Jam Masuk</th>
-                        <th>Jam Pulang</th>
-                        <th>Status</th>
-                        <th>Aksi</th>
+                        <td>{{ $loop->iteration }}</td>
+                        <td>{{ $data->nama_siswa }}</td>
+                        <td>{{ $data->no_induk }}</td>
+                        <td>
+                            <a href="{{ asset($data->foto) }}" data-toggle="lightbox" data-title="Foto {{ $data->nama_siswa }}" data-gallery="gallery" data-footer='<a href="{{ route('siswa.ubah-foto', Crypt::encrypt($data->id)) }}" id="linkFotoGuru" class="btn btn-link btn-block btn-light"><i class="nav-icon fas fa-file-upload"></i> &nbsp; Ubah Foto</a>'>
+                                <img src="{{ asset($data->foto) }}" width="130px" class="img-fluid mb-2">
+                            </a>
+                            {{-- https://siakad.didev.id/siswa/ubah-foto/{{$data->id}} --}}
+                        </td>
+                        <td>
+                            <form action="{{ route('siswa.destroy', $data->id) }}" method="post">
+                                @csrf
+                                @method('delete')
+                                <a href="{{ route('siswa.show', Crypt::encrypt($data->id)) }}" class="btn btn-info btn-sm mt-2"><i class="nav-icon fas fa-id-card"></i> &nbsp; Detail</a>
+                                <a href="{{ route('siswa.edit', Crypt::encrypt($data->id)) }}" class="btn btn-success btn-sm mt-2"><i class="nav-icon fas fa-edit"></i> &nbsp; Edit</a>
+                                <button class="btn btn-danger btn-sm mt-2"><i class="nav-icon fas fa-trash-alt"></i> &nbsp; Hapus</button>
+                            </form>
+                        </td>
                     </tr>
-                </thead>
-                <tbody>
-                    @foreach ($absensi_kehadiran as $data)
-                        <tr>
-                            <td>{{ $loop->iteration }}</td>
-                            <td>{{ $data->tanggal }}</td>
-                            <td>
-                                <a href="{{ asset($data->siswa->foto) }}" data-toggle="lightbox" data-title="Foto {{ $data->siswa->nama_siswa }}" data-gallery="gallery">
-                                    <img src="{{ asset($data->siswa->foto) }}" width="130px" class="img-fluid mb-2">
-                                </a>
-                            </td>
-                            <td>{{ $data->siswa->nama_siswa }}</td>
-                            <td>{{ $data->jam_masuk }}</td>
-                            <td>{{ $data->jam_pulang ?? '-' }}</td>
-                            <td>{{ $data->status_masuk }}</td>
-                            <td class="d-flex">
-                                <form action="{{ route('absensi-kehadiran.destroy-siswa', $data->id) }}" method="post">
-                                    @csrf
-                                    @method('delete')
-                                    <button class="btn btn-danger btn-sm"><i class="nav-icon fas fa-trash-alt"></i>
-                                        &nbsp; Hapus</button>
-                                </form>
-                            </td>
-                        </tr>
-                    @endforeach
-                </tbody>
-            </table>
+                @endforeach
+            </tbody>
+          </table>
         </div>
         <!-- /.card-body -->
     </div>
     <!-- /.card -->
-    </div>
-    <!-- /.col -->
-
+</div>
+<!-- /.col -->
 @endsection
 @section('script')
     <script>
-        $("#DataModul").addClass("active");
-
-        $("document").ready(function() {
-            getMapelGuru();
-        })
-
-        function getMapelGuru() {
-            let guru = document.getElementById('guru');
-            let mapel = document.getElementById('mapel');
-
-            if (!guru.value)
-                return;
-
-            $.ajax({
-                type: "GET",
-                dataType: "JSON",
-                url: `{{ url('/modul-guru/get-mapel-guru/${guru.value}') }}`,
-                success: function(result) {
-                    if (result) {
-                        $('#mapel').empty();
-                        var option = $('<option value="">-- Pilih Mapel --</option>');
-                        $('#mapel').append(option);
-                        if (result) {
-                            $.each(result, function(index, val) {
-                                var option = $('<option></option>')
-                                    .attr('value', val.id).text(
-                                        val
-                                        .nama_mapel)
-                                    .prop('selected', ("{{ request('mapel') }}" == val.id));
-                                $('#mapel').append(option);
-                            });
-                        }
-                    } else {
-                        toastr.error("Gagal mengambil data mapel.");
-                    }
-                },
-                error: function(e) {
-                    toastr.error("Terjadi kesalahan. Coba lagi nanti.");
-                },
-                complete: function() {}
-            });
-        }
+        $("#MasterData").addClass("active");
+        $("#liMasterData").addClass("menu-open");
+        $("#DataSiswa").addClass("active");
     </script>
 @endsection
