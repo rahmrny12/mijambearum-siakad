@@ -136,7 +136,7 @@ class RegisterController extends Controller
                 'name' => $guru->nama_guru,
                 'email' => $data['email'],
                 'password' => Hash::make($data['password']),
-                'role' => $data['role'],
+                'roles' => json_encode([$data['role']]),
                 'id_card' => $data['nomer'],
             ]);
         } else {
@@ -148,7 +148,7 @@ class RegisterController extends Controller
                 'name' => strtolower($siswa->nama_siswa),
                 'email' => $data['email'],
                 'password' => Hash::make($data['password']),
-                'role' => $data['role'],
+                'roles' => json_encode([$data['role']]),
                 'no_induk' => $data['nomer'],
             ]);
         }

@@ -20,7 +20,6 @@
                         <tr>
                             <th>No.</th>
                             <th>Nama</th>
-                            <th>Id Card</th>
                             <th>NIP</th>
                             <th>Foto</th>
                             <th>Aksi</th>
@@ -31,7 +30,6 @@
                             <tr>
                                 <td>{{ $loop->iteration }}</td>
                                 <td>{{ $data->nama_guru }}</td>
-                                <td>{{ $data->id_card }}</td>
                                 <td>{{ $data->nip }}</td>
                                 <td>
                                     <a href="{{ asset($data->foto) }}" data-toggle="lightbox"

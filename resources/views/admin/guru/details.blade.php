@@ -23,7 +23,6 @@
                     <div class="col-md-7">
                         <h5 class="card-title card-text mb-2">Nama : {{ $guru->nama_guru }}</h5>
                         <h5 class="card-title card-text mb-2">NIPM : {{ $guru->nip }}</h5>
-                        <h5 class="card-title card-text mb-2">No Id Card : {{ $guru->id_card }}</h5>
                         <h5 class="card-title card-text mb-2">Guru Mapel : @foreach ($guru->mapel as $mapel)
                                 <span class="badge badge-info p-2">{{ $mapel->nama_mapel }}</span>
                             @endforeach
@@ -37,7 +36,7 @@
                         <h5 class="card-title card-text mb-2">Tempat Lahir : {{ $guru->tmp_lahir }}</h5>
                         <h5 class="card-title card-text mb-2">Tanggal Lahir :
                             {{ date('l, d F Y', strtotime($guru->tgl_lahir)) }}</h5>
-                        <h5 class="card-title card-text mb-2">No. Telepon : {{ $guru->telp }}</h5>
+                        <h5 class="card-title card-text mb-2">No. Telepon : {{ $guru->no_telp }}</h5>
                         <h5 class="card-title card-text mb-2">RFID : {{ $guru->rfid }}</h5>
                     </div>
                 </div>

@@ -196,11 +196,11 @@
                                     </select>
                                 </div>
                                 <div class="form-group">
-                                    <label for="telp">Nomor Telpon/HP</label>
-                                    <input type="text" id="telp" name="telp"
+                                    <label for="no_telp">Nomor Telpon/HP</label>
+                                    <input type="text" id="no_telp" name="no_telp"
                                         onkeypress="return inputAngka(event)"
-                                        class="form-control @error('telp') is-invalid @enderror"
-                                        value="{{ old('telp') }}">
+                                        class="form-control @error('no_telp') is-invalid @enderror"
+                                        value="{{ old('no_telp') }}">
                                 </div>
                             </div>
                             <div class="col-md-6">
@@ -244,7 +244,7 @@
                                         $id_card = $kode;
                                     }
                                 @endphp
-                                <div class="form-group">
+                                <div class="form-group d-none">
                                     <label for="id_card">Nomor ID Card</label>
                                     <input type="text" id="id_card" name="id_card" maxlength="5"
                                         onkeypress="return inputAngka(event)" value="{{ $id_card }}"
@@ -260,6 +260,13 @@
                                             <label class="custom-file-label" for="foto">Choose file</label>
                                         </div>
                                     </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="rfid">RFID</label>
+                                    <input type="text" id="rfid" name="rfid"
+                                        onkeypress="return inputAngka(event)"
+                                        class="form-control @error('rfid') is-invalid @enderror"
+                                        value="{{ old('rfid') }}">
                                 </div>
                             </div>
                         </div>

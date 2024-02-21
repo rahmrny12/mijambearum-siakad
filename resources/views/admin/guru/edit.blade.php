@@ -42,14 +42,9 @@
                                     class="form-control @error('tmp_lahir') is-invalid @enderror">
                             </div>
                             <div class="form-group">
-                                <label for="id_card">Nomor ID Card</label>
-                                <input type="text" id="id_card" name="id_card" class="form-control"
-                                    value="{{ $guru->id_card }}" readonly>
-                            </div>
-                            <div class="form-group">
-                                <label for="telp">Nomor Telpon/HP</label>
-                                <input type="text" id="telp" name="telp" onkeypress="return inputAngka(event)"
-                                    value="{{ $guru->telp }}" class="form-control @error('telp') is-invalid @enderror">
+                                <label for="no_telp">Nomor Telpon/HP</label>
+                                <input type="text" id="no_telp" name="no_telp" onkeypress="return inputAngka(event)"
+                                    value="{{ $guru->no_telp }}" class="form-control @error('no_telp') is-invalid @enderror">
                             </div>
                         </div>
                         <div class="col-md-6">
@@ -79,6 +74,11 @@
                                 <label for="tmk">Tanggal Mulai Kerja</label>
                                 <input type="date" id="tmk" name="tmk" value="{{ $guru->tmk }}"
                                     class="form-control @error('tmk') is-invalid @enderror">
+                            </div>
+                            <div class="form-group">
+                                <label for="rfid">RFID</label>
+                                <input type="text" id="rfid" name="rfid" value="{{ $guru->rfid }}"
+                                    class="form-control @error('rfid') is-invalid @enderror">
                             </div>
                         </div>
                     </div>
