@@ -77,7 +77,7 @@ class GuruController extends Controller
             'nama_guru' => $request->nama_guru,
             'tmk' => $request->tanggal_mulai_kerja,
             'jk' => $request->jenis_kelamin,
-            'telp' => $request->telp,
+            'no_telp' => $request->no_telp,
             'tmp_lahir' => $request->tempat_lahir,
             'tgl_lahir' => $request->tanggal_lahir,
             'foto' => $nameFoto
@@ -145,7 +145,7 @@ class GuruController extends Controller
             'nama_guru' => $request->nama_guru,
             'tmk' => $request->tmk,
             'jk' => $request->jk,
-            'telp' => $request->telp,
+            'no_telp' => $request->no_telp,
             'tmp_lahir' => $request->tmp_lahir,
             'tgl_lahir' => $request->tgl_lahir
         ];
