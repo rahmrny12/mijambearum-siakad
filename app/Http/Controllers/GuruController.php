@@ -151,6 +151,7 @@ class GuruController extends Controller
             'no_telp' => $request->no_telp,
             'tmp_lahir' => $request->tmp_lahir,
             'tgl_lahir' => $request->tgl_lahir,
+            'nip' => $request->nip,
             'rfid' => $request->rfid,
         ];
 

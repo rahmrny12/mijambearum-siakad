@@ -51,8 +51,7 @@
                             <div class="form-group">
                                 <label for="nip">NIPM</label>
                                 <input type="text" id="nip" name="nip" onkeypress="return inputAngka(event)"
-                                    value="{{ $guru->nip }}" class="form-control @error('nip') is-invalid @enderror"
-                                    disabled>
+                                    value="{{ $guru->nip }}" class="form-control @error('nip') is-invalid @enderror">
                             </div>
                             <div class="form-group">
                                 <label for="jk">Jenis Kelamin</label>
