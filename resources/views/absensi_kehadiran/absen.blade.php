@@ -34,9 +34,8 @@
                                 
                                 await sendAbsensi(keyword)
                                     .then(response => {
-                                        const type = Object.keys(response)[0];
-                                        const message = response[type];
-                                        console.log(response)
+                                        const type = response.type;
+                                        const message = response.message;
 
                                         toastr.options.positionClass = "toast-top-center";
                                         if (type == 'success') {
@@ -47,15 +46,15 @@
                                             toastr.error(message)
                                         }
                                         toastr.options.positionClass = "toast-top-right";
-                                        
-                                        const removeCard = setTimeout(() => {
-                                            console.log('tes')
-                                            $("#siswa_card").addClass('d-none');
-                                            $("#guru_card").addClass('d-none');
-                                        }, 2000);
                                     })
                                     .catch(error => {
                                         toastr.error("Terjadi kesalahan saat mengirim absensi. " + error.status == undefined ? '' : error.status + " " + error.statusText == undefined ? '' : error.statusText)
+                                    })
+                                    .finally(() => {
+                                        const removeCard = setTimeout(() => {
+                                            $("#siswa_card").addClass('d-none');
+                                            $("#guru_card").addClass('d-none');
+                                        }, 2000);
                                     })
                             })
                             .catch(error => {

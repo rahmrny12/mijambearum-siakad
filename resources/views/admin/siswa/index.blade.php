@@ -182,12 +182,6 @@
                                     </select>
                                 </div>
                                 <div class="form-group">
-                                    <label for="telp">Nomor Telpon/HP</label>
-                                    <input type="text" id="telp" name="telp"
-                                        onkeypress="return inputAngka(event)"
-                                        class="form-control @error('telp') is-invalid @enderror">
-                                </div>
-                                <div class="form-group">
                                     <label for="tgl_lahir">Tanggal Lahir</label>
                                     <input type="date" id="tgl_lahir" name="tgl_lahir"
                                         class="form-control @error('tgl_lahir') is-invalid @enderror">
@@ -196,6 +190,11 @@
                                     <label for="no_telp">Nomor HP</label>
                                     <input type="number" id="no_telp" name="no_telp"
                                         class="form-control @error('no_telp') is-invalid @enderror">
+                                </div>
+                                <div class="form-group">
+                                    <label for="rfid">RFID</label>
+                                    <input type="number" id="rfid" name="rfid"
+                                        class="form-control @error('rfid') is-invalid @enderror">
                                 </div>
                             </div>
                         </div>
