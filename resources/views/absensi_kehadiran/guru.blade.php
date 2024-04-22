@@ -41,11 +41,7 @@
                             <td>{{ $data->jam_pulang ?? '-' }}</td>
                             <td>{{ $data->status_masuk }}</td>
                             <td class="d-flex">
-                                <a href="{{ route('modul.show_file', Crypt::encrypt($data->id)) }}" target="_blank"
-                                    class="btn btn-info btn-sm mr-2"><i class="nav-icon fas fa-search-plus"></i>
-                                    &nbsp;
-                                    Detail</a>
-                                <form action="{{ route('absensi-kehadiran.destroy-guru', $data->id) }}" method="post">
+                                <form action="{{ route('absensi-kehadiran.destroy-guru', $data->id) }}" method="post" id="deleteForm">
                                     @csrf
                                     @method('delete')
                                     <button class="btn btn-danger btn-sm"><i class="nav-icon fas fa-trash-alt"></i>
@@ -66,47 +62,20 @@
 @endsection
 @section('script')
     <script>
-        $("#DataModul").addClass("active");
-
         $("document").ready(function() {
-            getMapelGuru();
-        })
-
-        function getMapelGuru() {
-            let guru = document.getElementById('guru');
-            let mapel = document.getElementById('mapel');
-
-            if (!guru.value)
-                return;
-
-            $.ajax({
-                type: "GET",
-                dataType: "JSON",
-                url: `{{ url('/modul-guru/get-mapel-guru/${guru.value}') }}`,
-                success: function(result) {
-                    if (result) {
-                        $('#mapel').empty();
-                        var option = $('<option value="">-- Pilih Mapel --</option>');
-                        $('#mapel').append(option);
-                        if (result) {
-                            $.each(result, function(index, val) {
-                                var option = $('<option></option>')
-                                    .attr('value', val.id).text(
-                                        val
-                                        .nama_mapel)
-                                    .prop('selected', ("{{ request('mapel') }}" == val.id));
-                                $('#mapel').append(option);
-                            });
-                        }
-                    } else {
-                        toastr.error("Gagal mengambil data mapel.");
+            document.getElementById('deleteForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                Swal.fire({
+                    title: 'Apakah Anda Yakin?',
+                    text: "Data absensi terkait akan dihapus.",
+                    showCancelButton: true,
+                    confirmButtonText: "Hapus",
+                }).then((result) => {
+                    if (result.value) {
+                        this.submit()
                     }
-                },
-                error: function(e) {
-                    toastr.error("Terjadi kesalahan. Coba lagi nanti.");
-                },
-                complete: function() {}
+                });
             });
-        }
+        })
     </script>
 @endsection

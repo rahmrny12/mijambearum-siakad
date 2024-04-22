@@ -9,8 +9,9 @@
             <div class="card-body">
                 <form action="" method="get">
                     <div class="d-flex justify-content-end">
-                        <a href="{{ route('absensi-kehadiran.siswa.export-excel', Crypt::encrypt($kelas->id)) }}" class="btn btn-success btn-sm my-3" target="_blank"><i
-                            class="nav-icon fas fa-file-export"></i> &nbsp; EXPORT EXCEL</a>
+                        <a href="{{ route('absensi-kehadiran.siswa.export-excel', Crypt::encrypt($kelas->id)) }}"
+                            class="btn btn-success btn-sm my-3" target="_blank"><i class="nav-icon fas fa-file-export"></i>
+                            &nbsp; EXPORT EXCEL</a>
                 </form>
             </div>
             <table id="example1" class="table table-bordered table-striped table-hover">
@@ -32,7 +33,8 @@
                             <td>{{ $loop->iteration }}</td>
                             <td>{{ $data->tanggal }}</td>
                             <td>
-                                <a href="{{ asset($data->siswa->foto) }}" data-toggle="lightbox" data-title="Foto {{ $data->siswa->nama_siswa }}" data-gallery="gallery">
+                                <a href="{{ asset($data->siswa->foto) }}" data-toggle="lightbox"
+                                    data-title="Foto {{ $data->siswa->nama_siswa }}" data-gallery="gallery">
                                     <img src="{{ asset($data->siswa->foto) }}" width="130px" class="img-fluid mb-2">
                                 </a>
                             </td>
@@ -41,7 +43,8 @@
                             <td>{{ $data->jam_pulang ?? '-' }}</td>
                             <td>{{ $data->status_masuk }}</td>
                             <td class="d-flex">
-                                <form action="{{ route('absensi-kehadiran.destroy-siswa', $data->id) }}" method="post" onsubmit="return confirm('Yakin ingin menghapus?')">
+                                <form action="{{ route('absensi-kehadiran.destroy-siswa', $data->id) }}" method="post"
+                                    id="deleteForm">
                                     @csrf
                                     @method('delete')
                                     <button class="btn btn-danger btn-sm"><i class="nav-icon fas fa-trash-alt"></i>
@@ -62,47 +65,20 @@
 @endsection
 @section('script')
     <script>
-        $("#DataModul").addClass("active");
-
         $("document").ready(function() {
-            getMapelGuru();
-        })
-
-        function getMapelGuru() {
-            let guru = document.getElementById('guru');
-            let mapel = document.getElementById('mapel');
-
-            if (!guru.value)
-                return;
-
-            $.ajax({
-                type: "GET",
-                dataType: "JSON",
-                url: `{{ url('/modul-guru/get-mapel-guru/${guru.value}') }}`,
-                success: function(result) {
-                    if (result) {
-                        $('#mapel').empty();
-                        var option = $('<option value="">-- Pilih Mapel --</option>');
-                        $('#mapel').append(option);
-                        if (result) {
-                            $.each(result, function(index, val) {
-                                var option = $('<option></option>')
-                                    .attr('value', val.id).text(
-                                        val
-                                        .nama_mapel)
-                                    .prop('selected', ("{{ request('mapel') }}" == val.id));
-                                $('#mapel').append(option);
-                            });
-                        }
-                    } else {
-                        toastr.error("Gagal mengambil data mapel.");
+            document.getElementById('deleteForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                Swal.fire({
+                    title: 'Apakah Anda Yakin?',
+                    text: "Data absensi terkait akan dihapus.",
+                    showCancelButton: true,
+                    confirmButtonText: "Hapus",
+                }).then((result) => {
+                    if (result.value) {
+                        this.submit()
                     }
-                },
-                error: function(e) {
-                    toastr.error("Terjadi kesalahan. Coba lagi nanti.");
-                },
-                complete: function() {}
+                });
             });
-        }
+        })
     </script>
 @endsection
