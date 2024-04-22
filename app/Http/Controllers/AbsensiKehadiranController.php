@@ -35,15 +35,14 @@ class AbsensiKehadiranController extends Controller
         $id = Crypt::decrypt($id);
         $absensi_kehadiran = AbsensiKehadiran::whereHas('siswa', function ($query) use ($id) {
             $query->where('kelas_id', $id);
-        })->get();
+        })->orderByDesc('id')->get();
         $kelas = Kelas::findorfail($id);
         return view('absensi_kehadiran.show', compact('absensi_kehadiran', 'kelas'));
     }
 
     public function guru()
     {
-        $absensi_kehadiran = AbsensiKehadiranGuru::get();
-        // dd($absensi_kehadiran);
+        $absensi_kehadiran = AbsensiKehadiranGuru::orderByDesc('id')->get();
         
         return view('absensi_kehadiran.guru', compact('absensi_kehadiran'));
     }
