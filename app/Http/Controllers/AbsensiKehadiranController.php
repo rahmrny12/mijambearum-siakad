@@ -43,7 +43,7 @@ class AbsensiKehadiranController extends Controller
     public function guru()
     {
         $absensi_kehadiran = AbsensiKehadiranGuru::orderByDesc('id')->get();
-        
+
         return view('absensi_kehadiran.guru', compact('absensi_kehadiran'));
     }
 
@@ -62,14 +62,14 @@ class AbsensiKehadiranController extends Controller
         $request->validate([
             'keyword' => 'required',
         ]);
-        
+
         $is_siswa = true;
         $user = Siswa::with('kelas')->where('rfid', $request->keyword)->first();
         if (!$user) {
             $is_siswa = false;
             $user = Guru::where('rfid', $request->keyword)->first();
         }
-        
+
         if ($user) {
             $aturan_jam_siswa = AturanJamSiswa::where('status', 1)->first();
 
@@ -91,7 +91,7 @@ class AbsensiKehadiranController extends Controller
                     if ($aturan_jam_siswa->jam_pulang > $jam_sekarang) {
                         return response()->json(['type' => 'warning', 'message' => 'Jam pulang belum tercapai']);
                     }
-                    
+
                     $existing_absen->update([
                         'jam_pulang' => $jam_sekarang,
                     ]);
@@ -102,18 +102,18 @@ class AbsensiKehadiranController extends Controller
                         $formattedDate = Carbon::parse($existing_absen->tanggal)->locale('id')->isoFormat('D MMMM YYYY');
 
                         if ($is_siswa) {
-                            $message = "INFO ABSENSI MIS JAMBE ARUM\n\nNAMA : {$user->nama_siswa}\nKELAS : {$user->kelas->nama_kelas}\n\nTELAH MELAKUKAN ABSENSI PULANG PADA PUKUL {$existing_absen->jam_pulang} TANGGAL {$formattedDate}\n";
+                            $message = "INFO ABSENSI MIS JAMBE ARUM\n\nNAMA : {$user->nama_siswa}\nKELAS : {$user->kelas->nama_kelas}\n\nTELAH MELAKUKAN ABSENSI PULANG PADA\nPUKUL: {$existing_absen->jam_pulang}\nTANGGAL: {$formattedDate}\n";
                         } else {
-                            $message = "INFO ABSENSI MIS JAMBE ARUM\n\nNAMA : {$user->nama_guru}\n\nTELAH MELAKUKAN ABSENSI PULANG PADA PUKUL {$existing_absen->jam_pulang} TANGGAL {$formattedDate}\n";
+                            $message = "INFO ABSENSI MIS JAMBE ARUM\n\nNAMA : {$user->nama_guru}\n\nTELAH MELAKUKAN ABSENSI PULANG PADA\nPUKUL: {$existing_absen->jam_pulang}\nTANGGAL: {$formattedDate}\n";
                         }
-                        
+
                         try {
                             $client = new Client;
-                        $request = $client->post('http://128.199.217.52/send-message', [
-                            'form_params' => [
-                                'message' => $message,
-                                'number' => $user->no_telp
-                            ]
+                            $request = $client->post('http://128.199.217.52/send-message', [
+                                'form_params' => [
+                                    'message' => $message,
+                                    'number' => $user->no_telp
+                                ]
                             ]);
                         } catch (\Throwable $e) {
                             return response()->json([
@@ -123,18 +123,18 @@ class AbsensiKehadiranController extends Controller
                             ]);
                         }
                     }
-                    
+
                     return response()->json(['type' => 'success', 'message' => 'Absensi pulang berhasil']);
                 }
             }
-            
+
             $jam_masuk = $aturan_jam_siswa->jam_masuk;
             $keterangan = 'Tepat Waktu';
 
             if ($jam_sekarang > $jam_masuk) {
                 $keterangan = 'Terlambat';
             }
-            
+
             if ($is_siswa) {
                 $inserted_absensi = AbsensiKehadiran::create([
                     'id_siswa' => $user->id,
@@ -157,11 +157,11 @@ class AbsensiKehadiranController extends Controller
                 $formattedDate = Carbon::parse($inserted_absensi->tanggal)->locale('id')->isoFormat('D MMMM YYYY');
 
                 if ($is_siswa) {
-                    $message = "INFO ABSENSI MIS JAMBE ARUM\n\nNAMA : {$user->nama_siswa}\nKELAS : {$user->kelas->nama_kelas}\n\nTELAH MELAKUKAN ABSENSI PADA PUKUL {$inserted_absensi->jam_masuk} TANGGAL {$formattedDate}\n";
+                    $message = "INFO ABSENSI MIS JAMBE ARUM\n\nNAMA : {$user->nama_siswa}\nKELAS : {$user->kelas->nama_kelas}\n\nTELAH MELAKUKAN ABSENSI PADA\nPUKUL: {$inserted_absensi->jam_masuk}\nTANGGAL: {$formattedDate}\nSTATUS: {$keterangan}";
                 } else {
-                    $message = "INFO ABSENSI MIS JAMBE ARUM\n\nNAMA : {$user->nama_guru}\n\nTELAH MELAKUKAN ABSENSI PADA PUKUL {$inserted_absensi->jam_masuk} TANGGAL {$formattedDate}\n";
+                    $message = "INFO ABSENSI MIS JAMBE ARUM\n\nNAMA : {$user->nama_guru}\n\nTELAH MELAKUKAN ABSENSI PADA\nPUKUL: {$inserted_absensi->jam_masuk}\nTANGGAL: {$formattedDate}\n";
                 }
-                
+
                 try {
                     $client = new Client;
                     $request = $client->post('http://128.199.217.52/send-message', [
@@ -169,7 +169,7 @@ class AbsensiKehadiranController extends Controller
                             'message' => $message,
                             'number' => $user->no_telp,
                         ]
-                        ]);
+                    ]);
                 } catch (\Throwable $e) {
                     return response()->json([
                         'type' => 'warning',
@@ -178,7 +178,7 @@ class AbsensiKehadiranController extends Controller
                     ]);
                 }
             }
-            
+
             return response()->json(['type' => 'success', 'message' => 'Absensi masuk berhasil']);
         } else {
             return response()->json(['type' => 'error', 'message' => 'Siswa tidak ditemukan']);
@@ -196,14 +196,14 @@ class AbsensiKehadiranController extends Controller
         $request->validate([
             'keyword' => 'required',
         ]);
-        
+
         $user = Siswa::with('kelas')->where('rfid', $request->keyword)->first();
         if (!$user)
             $user = Guru::where('rfid', $request->keyword)->first();
 
         if (!$user)
             return response()->json(['type' => 'error', 'message' => 'Siswa tidak ditemukan'], 404);
-        
+
         return response()->json($user);
     }
 
