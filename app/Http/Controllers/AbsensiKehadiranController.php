@@ -111,8 +111,9 @@ class AbsensiKehadiranController extends Controller
                             $client = new Client;
                             $request = $client->post('http://128.199.217.52/send-message', [
                                 'form_params' => [
-                                    'message' => $message,
-                                    'number' => $user->no_telp
+                                    'text' => $message,
+                                    'to' => '62' . substr($user->no_telp, 1),
+                                    'session' => 'mysession'
                                 ]
                             ]);
                         } catch (\Throwable $e) {
@@ -166,8 +167,9 @@ class AbsensiKehadiranController extends Controller
                     $client = new Client;
                     $request = $client->post('http://128.199.217.52/send-message', [
                         'form_params' => [
-                            'message' => $message,
-                            'number' => $user->no_telp,
+                            'text' => $message,
+                            'to' => '62' . substr($user->no_telp, 1),
+                            'session' => 'mysession'
                         ]
                     ]);
                 } catch (\Throwable $e) {
