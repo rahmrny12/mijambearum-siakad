@@ -40,7 +40,6 @@
                                     <td>{{ $loop->iteration }}</td>
                                     <td class="text-capitalize">{{ $data->name }}</td>
                                     <td>{{ $data->email }}</td>
-                                    <td>{{ $role_user }}</td>
                                     @if ($role_user == 'Guru')
                                         <td>{{ $data->id_card }}</td>
                                     @elseif ($role_user == 'Siswa')
