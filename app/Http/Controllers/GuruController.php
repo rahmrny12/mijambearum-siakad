@@ -134,6 +134,7 @@ class GuruController extends Controller
             'mapel_id' => 'required',
             'jk' => 'required',
             'rfid' => 'required',
+            'id_card' => 'required',
         ]);
 
         $guru = Guru::findorfail($id);
@@ -153,6 +154,7 @@ class GuruController extends Controller
             'tgl_lahir' => $request->tgl_lahir,
             'nip' => $request->nip,
             'rfid' => $request->rfid,
+            'id_card' => $request->id_card,
         ];
 
         $guru->mapel()->detach();

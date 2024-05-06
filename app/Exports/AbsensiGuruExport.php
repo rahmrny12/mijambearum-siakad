@@ -22,7 +22,7 @@ class AbsensiGuruExport implements FromCollection, ShouldAutoSize, WithColumnFor
         ::select('absen_kehadiran_guru.tanggal', 'absen_kehadiran_guru.jam_masuk', 'absen_kehadiran_guru.jam_pulang', 'absen_kehadiran_guru.status_masuk', 'guru.nama_guru', 'guru.nip')->leftJoin('guru', 'guru.id', '=', 'absen_kehadiran_guru.id_guru')->get();
         return $absensi_kehadiran;
     }
-
+    
     public function headings(): array
     {
         return [

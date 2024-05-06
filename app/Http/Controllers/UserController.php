@@ -125,9 +125,9 @@ class UserController extends Controller
             return redirect()->back()->with('warning', 'Maaf halaman ini hanya bisa di akses oleh Admin!');
         } else {
             $user = User::whereJsonContains('roles', $id)->get();
-            $role = $id;
+            $role_user = $id;
             $roles = Role::all();
-            return view('admin.user.show', compact('user', 'role', 'roles'));
+            return view('admin.user.show', compact('user', 'role_user', 'roles'));
         }
     }
 

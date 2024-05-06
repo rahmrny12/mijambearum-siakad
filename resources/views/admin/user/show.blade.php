@@ -1,10 +1,10 @@
 @extends('template_backend.home')
 @section('heading')
-    Data User {{ $role }}
+    Data User {{ $role_user }}
 @endsection
 @section('page')
     <li class="breadcrumb-item active"><a href="{{ route('user.index') }}">User</a></li>
-    <li class="breadcrumb-item active">{{ $role }}</li>
+    <li class="breadcrumb-item active">{{ $role_user }}</li>
 @endsection
 @section('content')
     <div class="col-md-12">
@@ -22,11 +22,11 @@
                             <th>No.</th>
                             <th>Username</th>
                             <th>Email</th>
-                            @if ($role == 'Guru')
+                            @if ($role_user == 'Guru')
                                 <th>No Id Card</th>
-                            @elseif ($role == 'Siswa')
+                            @elseif ($role_user == 'Siswa')
                                 <th>No Induk Siswa</th>
-                            @elseif ($role == 'BK')
+                            @elseif ($role_user == 'BK')
                                 <th>Tingkatan Kelas</th>
                             @endif
                             {{-- <th>Tanggal Register</th> --}}
@@ -40,11 +40,12 @@
                                     <td>{{ $loop->iteration }}</td>
                                     <td class="text-capitalize">{{ $data->name }}</td>
                                     <td>{{ $data->email }}</td>
-                                    @if ($data->role == 'Siswa')
-                                        <td>{{ $data->no_induk }}</td>
-                                    @elseif ($data->role == 'Guru')
+                                    <td>{{ $role_user }}</td>
+                                    @if ($role_user == 'Guru')
                                         <td>{{ $data->id_card }}</td>
-                                    @elseif ($data->role == 'BK')
+                                    @elseif ($role_user == 'Siswa')
+                                        <td>{{ $data->no_induk }}</td>
+                                    @elseif ($role_user == 'BK')
                                         <td>
                                             Kelas {{ $data->tingkatan_kelas }}
                                             <button type="button" class="btn" data-toggle="modal"
@@ -58,7 +59,9 @@
                                         <form action="{{ route('user.destroy', $data->id) }}" method="post">
                                             @csrf
                                             @method('delete')
-                                            <button type="button" class="btn btn-warning btn-sm text-white" data-toggle="modal" data-target=".edit-jabatan-{{ $data->id }}"><i class="nav-icon fas fa-edit"></i>
+                                            <button type="button" class="btn btn-warning btn-sm text-white"
+                                                data-toggle="modal" data-target=".edit-jabatan-{{ $data->id }}"><i
+                                                    class="nav-icon fas fa-edit"></i>
                                                 &nbsp; Edit Jabatan</button>
                                             <button class="btn btn-danger btn-sm"><i class="nav-icon fas fa-trash-alt"></i>
                                                 &nbsp; Hapus</button>
@@ -135,9 +138,13 @@
                                                         <div class="col-md-12">
                                                             @foreach ($roles as $role)
                                                                 <div class="form-check">
-                                                                    <input class="form-check-input" type="checkbox" value="{{ $role->role }}" name="roles[]" id="role-{{ $role->id }}" {{ in_array($role->role, json_decode($data->roles)) ? 'checked' : '' }}>
-                                                                    
-                                                                    <label class="form-check-label" for="role-{{ $role->id }}">
+                                                                    <input class="form-check-input" type="checkbox"
+                                                                        value="{{ $role->role }}" name="roles[]"
+                                                                        id="role-{{ $role->id }}"
+                                                                        {{ in_array($role->role, json_decode($data->roles)) ? 'checked' : '' }}>
+
+                                                                    <label class="form-check-label"
+                                                                        for="role-{{ $role->id }}">
                                                                         {{ $role->role }}
                                                                     </label>
                                                                 </div>

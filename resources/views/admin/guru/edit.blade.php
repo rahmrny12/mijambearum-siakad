@@ -44,7 +44,14 @@
                             <div class="form-group">
                                 <label for="no_telp">Nomor Telpon/HP</label>
                                 <input type="text" id="no_telp" name="no_telp" onkeypress="return inputAngka(event)"
-                                    value="{{ $guru->no_telp }}" class="form-control @error('no_telp') is-invalid @enderror">
+                                    value="{{ $guru->no_telp }}"
+                                    class="form-control @error('no_telp') is-invalid @enderror">
+                            </div>
+                            <div class="form-group">
+                                <label for="id_card">ID Card</label>
+                                <input type="text" id="id_card" name="id_card" onkeypress="return inputAngka(event)"
+                                    class="form-control @error('id_card') is-invalid @enderror"
+                                    value="{{ old('id_card') }}">
                             </div>
                         </div>
                         <div class="col-md-6">
