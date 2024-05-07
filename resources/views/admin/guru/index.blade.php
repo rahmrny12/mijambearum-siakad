@@ -230,26 +230,6 @@
                                         class="form-control @error('tanggal_mulai_kerja') is-invalid @enderror"
                                         value="{{ old('tanggal_mulai_kerja', date('Y-m-d')) }}">
                                 </div>
-                                @php
-                                    $kode = $max + 1;
-                                    if (strlen($kode) == 1) {
-                                        $id_card = '0000' . $kode;
-                                    } elseif (strlen($kode) == 2) {
-                                        $id_card = '000' . $kode;
-                                    } elseif (strlen($kode) == 3) {
-                                        $id_card = '00' . $kode;
-                                    } elseif (strlen($kode) == 4) {
-                                        $id_card = '0' . $kode;
-                                    } else {
-                                        $id_card = $kode;
-                                    }
-                                @endphp
-                                <div class="form-group d-none">
-                                    <label for="id_card">Nomor ID Card</label>
-                                    <input type="text" id="id_card" name="id_card" maxlength="5"
-                                        onkeypress="return inputAngka(event)" value="{{ $id_card }}"
-                                        class="form-control @error('id_card') is-invalid @enderror" readonly>
-                                </div>
                                 <div class="form-group">
                                     <label for="foto">File input</label>
                                     <div class="input-group">
@@ -267,6 +247,26 @@
                                         onkeypress="return inputAngka(event)"
                                         class="form-control @error('rfid') is-invalid @enderror"
                                         value="{{ old('rfid') }}">
+                                </div>
+                                @php
+                                    $kode = $max + 1;
+                                    if (strlen($kode) == 1) {
+                                        $id_card = '0000' . $kode;
+                                    } elseif (strlen($kode) == 2) {
+                                        $id_card = '000' . $kode;
+                                    } elseif (strlen($kode) == 3) {
+                                        $id_card = '00' . $kode;
+                                    } elseif (strlen($kode) == 4) {
+                                        $id_card = '0' . $kode;
+                                    } else {
+                                        $id_card = $kode;
+                                    }
+                                @endphp
+                                <div class="form-group">
+                                    <label for="id_card">Nomor ID Card</label>
+                                    <input type="text" id="id_card" name="id_card" maxlength="5"
+                                        onkeypress="return inputAngka(event)" value="{{ $id_card }}"
+                                        class="form-control @error('id_card') is-invalid @enderror" readonly>
                                 </div>
                             </div>
                         </div>

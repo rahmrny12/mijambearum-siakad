@@ -25,9 +25,9 @@ class UserController extends Controller
     {
         $user = User::all();
         $user = $user->groupBy(function ($user) {
-                    $roles = json_decode($user->roles, true);
-                    return $roles;
-                });
+            $roles = json_decode($user->roles, true);
+            return $roles;
+        });
 
         return view('admin.user.index', compact('user'));
     }
@@ -174,12 +174,8 @@ class UserController extends Controller
     {
         $user = User::findorfail($id);
         if ($user->role == 'Admin') {
-            if ($user->id == Auth::user()->id) {
-                $user->delete();
-                return redirect()->back()->with('warning', 'Data user berhasil dihapus! (Silahkan cek trash data user)');
-            } else {
-                return redirect()->back()->with('error', 'Maaf user ini bukan milik anda!');
-            }
+            $user->delete();
+            return redirect()->back()->with('warning', 'Data user berhasil dihapus! (Silahkan cek trash data user)');
         } elseif ($user->role == 'Operator') {
             if ($user->id == Auth::user()->id || Auth::user()->role == 'Admin') {
                 $user->delete();

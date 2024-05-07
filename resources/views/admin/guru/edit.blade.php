@@ -49,9 +49,9 @@
                             </div>
                             <div class="form-group">
                                 <label for="id_card">ID Card</label>
-                                <input type="text" id="id_card" name="id_card" onkeypress="return inputAngka(event)"
+                                <input type="text" id="id_card" name="id_card" maxlength="5" onkeypress="return inputAngka(event)"
                                     class="form-control @error('id_card') is-invalid @enderror"
-                                    value="{{ old('id_card') }}">
+                                    value="{{ $guru->id_card }}">
                             </div>
                         </div>
                         <div class="col-md-6">

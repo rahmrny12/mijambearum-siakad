@@ -68,13 +68,12 @@
                                     @enderror
                                 </div>
                                 <div class="form-group">
-                                    <label for="role">Level User</label>
+                                    <label for="role">Level User {{ old('role') != null ? old('role')[0] : null }}</label>
                                     <select id="role" type="text"
-                                        class="form-control @error('role') is-invalid @enderror select2bs4" name="role[]"
-                                        value="{{ old('role') }}" autocomplete="role">
+                                        class="form-control @error('role') is-invalid @enderror select2bs4" name="role[]" autocomplete="role">
                                         <option value="">-- Select {{ __('Level User') }} --</option>
-                                        <option value="Admin">Admin</option>
-                                        <option value="Guru">Guru</option>
+                                        <option {{ old('role') != null && old('role')[0] == 'Admin' ? 'selected' : null }} value="Admin">Admin</option>
+                                        <option {{ old('role') != null && old('role')[0] == 'Guru' ? 'selected' : null }} value="Guru">Guru</option>
                                         {{-- <option value="Siswa">Siswa</option> --}}
                                     </select>
                                     @error('role')
