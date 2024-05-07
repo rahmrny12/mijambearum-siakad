@@ -25,14 +25,14 @@
             background-repeat: no-repeat;
             background-position: 50% 0;
             background-size: cover;
-            }
+        }
     </style>
 </head>
 
 <body class="hold-transition overflow-hidden position-relative login-page">
     <div class="login-box" style="background-color: black; width: 100%; height: 100%;">
         <div class="login-logo my-4">
-            <h1 class="text-white">Absensi Kehadiran<br/>MI Jambearum</h1>
+            <h1 class="text-white">Absensi Kehadiran<br />MI Jambearum</h1>
         </div>
 
         @yield('content')
@@ -42,13 +42,15 @@
                 <strong>Copyright &copy;
                     <script>
                         document.write(new Date().getFullYear());
-                    </script> &diams; <a href="http://piramidsoft.com/" style="color: white;">MI Jambearum</a>.
+                    </script> &diams; <a href="http://piramidsoft.com/" style="color: white;">MI
+                        Jambearum</a>.
                 </strong>
             </marquee>
         </footer>
     </div>
 
-    <div class="position-absolute top-0 bottom-0 left-0 right-0 my-4 bg-light d-none" id="siswa_card" style="height: 100%; width: 100%">
+    <div class="position-absolute top-0 bottom-0 left-0 right-0 my-4 bg-light d-none" id="siswa_card"
+        style="height: 100%; width: 100%">
         <div class="card-body">
             <div class="d-flex justify-content-between align-items-center">
                 <span class="tanggal_absen">Tanggal : 00 - 00</span>
@@ -75,13 +77,15 @@
                     </div>
                 </div>
                 <div class="col-md-4">
-                    <img class="img-thumbnail img-fluid" src="{{ asset('uploads/siswa/27231912072020_male.jpg') }}" id="foto" alt="Foto Siswa">
+                    <img class="img-thumbnail img-fluid" src="{{ asset('uploads/siswa/27231912072020_male.jpg') }}"
+                        id="foto" alt="Foto Siswa">
                 </div>
             </div>
         </div>
     </div>
 
-    <div class="position-absolute top-0 bottom-0 left-0 right-0 my-4 bg-light d-none" id="guru_card" style="height: 100%; width: 100%">
+    <div class="position-absolute top-0 bottom-0 left-0 right-0 my-4 bg-light d-none" id="guru_card"
+        style="height: 100%; width: 100%">
         <div class="card-body">
             <div class="d-flex justify-content-between align-items-center">
                 <span class="tanggal_absen">Tanggal : 00 - 00</span>
@@ -112,7 +116,8 @@
                     </div>
                 </div>
                 <div class="col-md-4">
-                    <img class="img-thumbnail img-fluid" src="{{ asset('uploads/guru/27231912072020_male.jpg') }}" id="foto" alt="Foto Guru">
+                    <img style="height: 70vh" class="float-right" src="{{ asset('uploads/guru/27231912072020_male.jpg') }}" id="foto_guru"
+                        alt="Foto Guru">
                 </div>
             </div>
         </div>

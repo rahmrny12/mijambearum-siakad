@@ -29,7 +29,8 @@
                                     $('.jenis_kelamin').html(result.jk == "L" ? "Laki-laki" : "Perempuan");
                                     $('#tmp_lahir').html(result.tmp_lahir);
                                     $('#tgl_lahir').html(result.tgl_lahir);
-                                    $('#foto').attr('src', `{{ asset('') }}` + result.foto);
+                                    console.log(result.foto)
+                                    $('#foto_guru').attr('src', `{{ asset('') }}` + result.foto);
                                 }
                                 
                                 await sendAbsensi(keyword)

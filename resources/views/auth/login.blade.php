@@ -70,8 +70,13 @@
                         &nbsp; <i class="nav-icon fas fa-sign-in-alt"></i></button>
                 </div>
             </div>
+            <div class="row mb-2">
+                <a href="{{ route('absensi-kehadiran.landing-absen', 'guru') }}" class="btn btn-outline-primary" style="width: 100%">Absensi Guru
+                    <i class="fas fa-arrow-alt-circle-right"></i>
+                </a>
+            </div>
             <div class="row mb-1">
-                <a href="{{ route('absensi-kehadiran.landing-absen', 'siswa') }}" class="btn btn-outline-primary" style="width: 100%">Absensi
+                <a href="{{ route('absensi-kehadiran.landing-absen', 'siswa') }}" class="btn btn-outline-primary" style="width: 100%">Absensi Siswa
                     <i class="fas fa-arrow-alt-circle-right"></i>
                 </a>
             </div>
