@@ -19,7 +19,7 @@ class NilaiController extends Controller
     {
         $guru = Guru::where('id_card', Auth::user()->id_card)->first();
         $kelas = Kelas::all();
-        $tahun = Nilai::select(DB::raw('YEAR(created_at) as tahun'))->groupBy(DB::raw('YEAR(created_at)'))->get();
+        $tahun = Nilai::select(DB::raw('EXTRACT(YEAR FROM created_at) as tahun'))->groupBy(DB::raw('EXTRACT(YEAR FROM created_at)'))->get();
 
         return view('guru.nilai.show', compact('guru', 'kelas', 'tahun'));
     }
@@ -28,7 +28,7 @@ class NilaiController extends Controller
     {
         $guru = Guru::all();
         $kelas = Kelas::all();
-        $tahun = Nilai::select(DB::raw('YEAR(created_at) as tahun'))->groupBy(DB::raw('YEAR(created_at)'))->get();
+        $tahun = Nilai::select(DB::raw('EXTRACT(YEAR FROM created_at) as tahun'))->groupBy(DB::raw('EXTRACT(YEAR FROM created_at)'))->get();
 
         return view('admin.nilai.show', compact('guru', 'kelas', 'tahun'));
     }
@@ -165,10 +165,9 @@ class NilaiController extends Controller
 
     public function all()
     {
-        dd('tes');
         $guru = Guru::where('id_card', Auth::user()->id_card)->first();
         $kelas = Kelas::all();
-        $tahun = Nilai::select(DB::raw('YEAR(created_at) as tahun'))->groupBy(DB::raw('YEAR(created_at)'))->get();
+        $tahun = Nilai::select(DB::raw('EXTRACT(YEAR FROM created_at) as tahun'))->groupBy(DB::raw('EXTRACT(YEAR FROM created_at)'))->get();
 
         return view('guru.nilai.all', compact('guru', 'kelas', 'tahun'));
     }

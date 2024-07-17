@@ -315,7 +315,6 @@
         complete:function(){
         }
       });
-      $("#link-siswa").attr("href", "https://siakad.didev.id/listsiswapdf/"+id);
     }
 
     function fillTableSiswa(result) {
