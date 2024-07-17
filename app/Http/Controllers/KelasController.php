@@ -58,16 +58,19 @@ class KelasController extends Controller
             ]);
         }
 
-        Kelas::updateOrCreate(
-            [
-                'id' => $request->id
-            ],
-            [
+        if ($request->id) {
+            Kelas::find($request->id)->update([
                 'nama_kelas' => $request->nama_kelas,
                 'paket_id' => $request->paket_id,
                 'guru_id' => $request->guru_id,
-            ]
-        );
+            ]);
+        } else {
+            Kelas::create([
+                'nama_kelas' => $request->nama_kelas,
+                'paket_id' => $request->paket_id,
+                'guru_id' => $request->guru_id,
+            ]);
+        }
 
         return redirect()->back()->with('success', 'Data kelas berhasil diperbarui!');
     }

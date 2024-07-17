@@ -62,20 +62,28 @@ class SikapController extends Controller
                 $guru->mapel->nama_mapel == "Pendidikan Agama dan Budi Pekerti" ||
                 $guru->mapel->nama_mapel == "Pendidikan Pancasila dan Kewarganegaraan"
             ) {
-                Sikap::updateOrCreate(
-                    [
-                        'id' => $request->id
-                    ],
-                    [
+                if ($request->id) {
+                    Sikap::find($request->id)->update([
                         'siswa_id' => $request->siswa_id,
                         'kelas_id' => $request->kelas_id,
                         'guru_id' => $request->guru_id,
                         'mapel_id' => $guru->mapel_id,
                         'sikap_1' => $request->sikap_1,
                         'sikap_2' => $request->sikap_2,
-                        'sikap_3' => $request->sikap_3
-                    ]
-                );
+                        'sikap_3' => $request->sikap_3,
+                    ]);
+                } else {
+                    Sikap::create([
+                        'siswa_id' => $request->siswa_id,
+                        'kelas_id' => $request->kelas_id,
+                        'guru_id' => $request->guru_id,
+                        'mapel_id' => $guru->mapel_id,
+                        'sikap_1' => $request->sikap_1,
+                        'sikap_2' => $request->sikap_2,
+                        'sikap_3' => $request->sikap_3,
+                    ]);
+                }
+                
                 return response()->json(['success' => 'Nilai sikap siswa berhasil ditambahkan!']);
             } else {
                 return redirect()->json(['error' => 'Maaf guru ini tidak dapat menambahkan nilai sikap!']);

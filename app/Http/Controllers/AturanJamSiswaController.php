@@ -54,17 +54,21 @@ class AturanJamSiswaController extends Controller
             AturanJamSiswa::where('id', '!=', $request->id)->update(['status' => 0]);
         }
 
-        AturanJamSiswa::updateOrCreate(
-            [
-                'id' => $request->id
-            ],
-            [
+        if ($request->id) {
+            AturanJamSiswa::find($request->id)->update([
                 'nama_aturan' => $request->nama_aturan,
                 'jam_masuk' => $request->jam_masuk,
                 'jam_pulang' => $request->jam_pulang,
                 'status' => $request->status,
-            ]
-        );
+            ]);
+        } else {
+            AturanJamSiswa::create([
+                'nama_aturan' => $request->nama_aturan,
+                'jam_masuk' => $request->jam_masuk,
+                'jam_pulang' => $request->jam_pulang,
+                'status' => $request->status,
+            ]);
+        }
 
         return redirect()->back()->with('success', 'Data Aturan Jam Siswa berhasil diperbarui!');
     }

@@ -52,11 +52,8 @@ class RapotController extends Controller
         $guru = Guru::findorfail($request->guru_id);
         $cekJadwal = Jadwal::where('guru_id', $guru->id)->where('kelas_id', $request->kelas_id)->count();
         if ($cekJadwal >= 1) {
-            Rapot::updateOrCreate(
-                [
-                    'id' => $request->id
-                ],
-                [
+            if ($request->id) {
+                Rapot::find($request->id)->update([
                     'siswa_id' => $request->siswa_id,
                     'kelas_id' => $request->kelas_id,
                     'guru_id' => $request->guru_id,
@@ -64,8 +61,18 @@ class RapotController extends Controller
                     'k_nilai' => $request->nilai,
                     'k_predikat' => $request->predikat,
                     'k_deskripsi' => $request->deskripsi,
-                ]
-            );
+                ]);
+            } else {
+                Rapot::create([
+                    'siswa_id' => $request->siswa_id,
+                    'kelas_id' => $request->kelas_id,
+                    'guru_id' => $request->guru_id,
+                    'mapel_id' => $guru->mapel_id,
+                    'k_nilai' => $request->nilai,
+                    'k_predikat' => $request->predikat,
+                    'k_deskripsi' => $request->deskripsi,
+                ]);
+            }
             return response()->json(['success' => 'Nilai rapot siswa berhasil ditambahkan!']);
         } else {
             return response()->json(['error' => 'Maaf guru ini tidak mengajar kelas ini!']);

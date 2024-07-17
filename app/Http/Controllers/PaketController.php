@@ -47,14 +47,15 @@ class PaketController extends Controller
             ]);
         }
 
-        Paket::updateOrCreate(
-            [
-                'id' => $request->id
-            ],
-            [
+        if ($request->id) {
+            Paket::find($request->id)->update([
                 'ket' => $request->ket,
-            ]
-        );
+            ]);
+        } else {
+            Paket::create([
+                'ket' => $request->ket,
+            ]);
+        }
 
         return redirect()->back()->with('success', 'Data paket berhasil diperbarui!');
     }

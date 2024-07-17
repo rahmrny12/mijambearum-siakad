@@ -48,16 +48,19 @@ class MapelController extends Controller
             'kelompok' => 'required'
         ]);
 
-        Mapel::updateOrCreate(
-            [
-                'id' => $request->mapel_id
-            ],
-            [
+        if ($request->mapel_id) {
+            Mapel::find($request->mapel_id)->update([
                 'nama_mapel' => $request->nama_mapel,
                 'paket_id' => $request->paket_id,
                 'kelompok' => $request->kelompok,
-            ]
-        );
+            ]);
+        } else {
+            Mapel::create([
+                'nama_mapel' => $request->nama_mapel,
+                'paket_id' => $request->paket_id,
+                'kelompok' => $request->kelompok,
+            ]);
+        }
 
         return redirect()->back()->with('success', 'Data mapel berhasil diperbarui!');
     }

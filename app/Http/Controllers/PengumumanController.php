@@ -17,14 +17,15 @@ class PengumumanController extends Controller
 
     public function simpan(Request $request)
     {
-        Pengumuman::updateOrCreate(
-            [
-                'id' => $request->id
-            ],
-            [
+        if ($request->id) {
+            Pengumuman::find($request->id)->update([
                 'isi' => $request->isi,
-            ]
-        );
+            ]);
+        } else {
+            Pengumuman::create([
+                'isi' => $request->isi,
+            ]);
+        }
 
         return redirect()->back()->with('success', 'Pengumuman berhasil di perbarui!');
     }

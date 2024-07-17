@@ -104,11 +104,8 @@ class UlanganController extends Controller
                 }
             } else {
             }
-            Ulangan::updateOrCreate(
-                [
-                    'id' => $request->id
-                ],
-                [
+            if ($request->id) {
+                Ulangan::find($request->id)->update([
                     'siswa_id' => $request->siswa_id,
                     'kelas_id' => $request->kelas_id,
                     'guru_id' => $request->guru_id,
@@ -118,8 +115,20 @@ class UlanganController extends Controller
                     'uts' => $request->uts,
                     'ulha_3' => $request->ulha_3,
                     'uas' => $request->uas,
-                ]
-            );
+                ]);
+            } else {
+                Ulangan::create([
+                    'siswa_id' => $request->siswa_id,
+                    'kelas_id' => $request->kelas_id,
+                    'guru_id' => $request->guru_id,
+                    'mapel_id' => $guru->mapel_id,
+                    'ulha_1' => $request->ulha_1,
+                    'ulha_2' => $request->ulha_2,
+                    'uts' => $request->uts,
+                    'ulha_3' => $request->ulha_3,
+                    'uas' => $request->uas,
+                ]);
+            }
             return response()->json(['success' => 'Nilai ulangan siswa berhasil ditambahkan!']);
         } else {
             return response()->json(['error' => 'Maaf guru ini tidak mengajar kelas ini!']);
