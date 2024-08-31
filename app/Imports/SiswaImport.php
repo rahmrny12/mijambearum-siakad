@@ -5,9 +5,15 @@ namespace App\Imports;
 use App\Siswa;
 use App\Kelas;
 use Maatwebsite\Excel\Concerns\ToModel;
+use Maatwebsite\Excel\Concerns\WithStartRow;
 
-class SiswaImport implements ToModel
+class SiswaImport implements ToModel, WithStartRow
 {
+    public function startRow(): int
+    {
+        return 2;
+    }
+    
     /**
      * @param array $row
      *
@@ -28,14 +34,14 @@ class SiswaImport implements ToModel
         if ($kelas != null) {
             return new Siswa([
                 'nama_siswa' => $row[0],
-                'jk' => $row[1],
+                'jk' => ($row[1] == 'Laki-laki' ? 'L' : $row[1] == 'Perempuan') ? 'P' : $row[1],
                 'tmp_lahir' => $row[2],
                 'tgl_lahir' => $tgl_lahir,
                 'rfid' => $row[4],
                 'no_induk' => $row[5],
                 'nis' => $row[6],
-                'alamat' => $row[7],
                 'foto' => $foto,
+                'no_telp' => $row[6],
                 'kelas_id' => $kelas->id,
             ]);
         }

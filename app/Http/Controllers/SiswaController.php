@@ -269,7 +269,7 @@ class SiswaController extends Controller
 
     public function export_excel()
     {
-        return Excel::download(new SiswaExport, 'siswa.xlsx');
+        return Excel::download(new SiswaExport, 'siswa_' . date('Ymd') . '.xlsx');
     }
 
     public function import_excel(Request $request)

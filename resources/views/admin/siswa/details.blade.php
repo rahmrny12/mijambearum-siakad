@@ -19,7 +19,7 @@
                 <div class="col-md-7">
                     <h5 class="card-title card-text mb-2">Nama : {{ $siswa->nama_siswa }}</h5>
                     <h5 class="card-title card-text mb-2">No. Induk : {{ $siswa->no_induk }}</h5>
-                    <h5 class="card-title card-text mb-2">NIS : {{ $siswa->nis }}</h5>
+                    <h5 class="card-title card-text mb-2">NISN : {{ $siswa->nis }}</h5>
                     <h5 class="card-title card-text mb-2">Kelas : {{ $siswa->kelas->nama_kelas }}</h5>
                     @if ($siswa->jk == 'L')
                         <h5 class="card-title card-text mb-2">Jenis Kelamin : Laki-laki</h5>
