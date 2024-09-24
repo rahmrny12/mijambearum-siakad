@@ -99,7 +99,9 @@ class AbsensiKehadiranController extends Controller
                     $existing_absen->refresh();
 
                     if ($user->no_telp != 0) {
-                        $formattedDate = Carbon::parse($existing_absen->tanggal)->locale('id')->isoFormat('D MMMM YYYY');
+                        // $formattedDate = Carbon::parse($existing_absen->tanggal)->locale('id')->isoFormat('D MMMM YYYY');
+                        $formattedDate = Carbon::now()->locale('id')->isoFormat('D MMMM YYYY');
+
 
                         if ($is_siswa) {
                             $message = "INFO ABSENSI MIS JAMBE ARUM\n\nNAMA : {$user->nama_siswa}\nKELAS : {$user->kelas->nama_kelas}\n\nTELAH MELAKUKAN ABSENSI PULANG PADA\nPUKUL: {$existing_absen->jam_pulang}\nTANGGAL: {$formattedDate}\n";
