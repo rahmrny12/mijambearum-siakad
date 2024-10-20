@@ -111,7 +111,7 @@ class AbsensiKehadiranController extends Controller
 
                         try {
                             $client = new Client;
-                            $request = $client->post('http://128.199.217.52/send-message', [
+                            $request = $client->post('https://blastengine.awandigital.id/send-message', [
                                 'form_params' => [
                                     'text' => $message,
                                     'to' => '62' . substr($user->no_telp, 1),
@@ -167,7 +167,7 @@ class AbsensiKehadiranController extends Controller
 
                 try {
                     $client = new Client;
-                    $request = $client->post('http://128.199.217.52/send-message', [
+                    $request = $client->post('https://blastengine.awandigital.id/send-message', [
                         'form_params' => [
                             'text' => $message,
                             'to' => '62' . substr($user->no_telp, 1),
