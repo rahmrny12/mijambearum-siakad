@@ -111,11 +111,18 @@ class AbsensiKehadiranController extends Controller
 
                         try {
                             $client = new Client;
-                            $request = $client->post('https://blastengine.awandigital.id/send-message', [
-                                'form_params' => [
-                                    'text' => $message,
+                            $data = [
+                                [
                                     'to' => '62' . substr($user->no_telp, 1),
-                                    'session' => 'mysession'
+                                    'text' => $message,
+                                    'isGroup' => false
+                                ]
+                            ];
+                            $request = $client->post('https://blastengine.awandigital.id/send-bulk-message', [
+                                'json' => [
+                                    'session' => 'mysession',
+                                    'delay' => 1000,
+                                    'data' => $data
                                 ]
                             ]);
                         } catch (\Throwable $e) {
@@ -167,11 +174,18 @@ class AbsensiKehadiranController extends Controller
 
                 try {
                     $client = new Client;
-                    $request = $client->post('https://blastengine.awandigital.id/send-message', [
-                        'form_params' => [
-                            'text' => $message,
+                    $data = [
+                        [
                             'to' => '62' . substr($user->no_telp, 1),
-                            'session' => 'mysession'
+                            'text' => $message,
+                            'isGroup' => false
+                        ]
+                    ];
+                    $request = $client->post('https://blastengine.awandigital.id/send-bulk-message', [
+                        'json' => [
+                            'session' => 'mysession',
+                            'delay' => 1000,
+                            'data' => $data
                         ]
                     ]);
                 } catch (\Throwable $e) {
